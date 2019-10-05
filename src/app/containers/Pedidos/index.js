@@ -6,7 +6,6 @@ class Pedidos extends Component {
     return (
       <div className="Pedidos">
         <Titulo tipo="h1" titulo="Pedidos" />
-
       </div>
     )
   }
