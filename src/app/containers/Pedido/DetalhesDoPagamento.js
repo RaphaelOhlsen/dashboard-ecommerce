@@ -11,12 +11,6 @@ class DetalhesDoPagamento extends Component {
     ]
   }
 
-  onRemoveListaDinamica = (index) => {
-    let { status } = this.state;
-    status = status.filter((item, _index) => _index !== index );
-    this.setState = ({ status });
-  }
-
   onAddListaDinamica = (texto) => {
     if (!texto) return false;
     let { status } = this.state;
@@ -32,8 +26,7 @@ class DetalhesDoPagamento extends Component {
         <br/>
         <ListaDinamica 
           dados={ status }
-          onRemove={this.onRemoveListaDinamica}
-          onAdd={this.onnAddistaDinamica}
+          onAdd={this.onAddListaDinamica}
         />
       </div>
     )
