@@ -22,9 +22,9 @@ class  App extends Component {
           <div className="App">
             <Route path={"/"} exact component={ base(Pedidos) } />
 
-            <Route path={"/login"} component={ base(Login) } />
-            <Route path={"/recuperar-senha"} component={ base(RecuperarSenha) } />
-            <Route path={"/recuperar-senha/:token"} component={ base(ResetarSenha) } />
+            <Route path={"/login"} component={Login} />
+            <Route path={"/recuperar-senha"} component={RecuperarSenha} />
+            <Route path={"/recuperar-senha/:token"} component={ResetarSenha} />
           </div>
         </Router>
       </Provider>

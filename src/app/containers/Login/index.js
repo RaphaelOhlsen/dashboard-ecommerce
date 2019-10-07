@@ -3,6 +3,10 @@ import { Link } from 'react-router-dom';
 
 import Titulo from '../../components/Texto/Titulo';
 
+import Input from '../../components/Inputs/Simples';
+import Checkbox from '../../components/Inputs/Checkbox';
+import Button from '../../components/Button/Simples';
+
 
 class Login extends Component {
 
@@ -44,8 +48,13 @@ class Login extends Component {
                 label="Lembrar?"
               />
             </div>
+            <div>
+              <Link to="/recuperar-senha">Esqueceu sua senha?</Link>
+            </div>
+
+            <Button type="success" rota="/" label="ENTRAR" />
+
           </div>
-          
         </div>
       </div>
     )
