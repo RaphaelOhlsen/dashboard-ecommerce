@@ -6,7 +6,13 @@ import { HashRouter as Router, Route } from 'react-router-dom';
 
 import base from "./containers/HOC/Base"
 
-import Pedidos from './containers/Pedidos/';
+// CONTAINER COM BASE
+import Pedidos from './containers/Pedidos';
+
+// CONTAINER SEM BASE
+import Login from './containers/Login';
+import RecuperarSenha from './containers/RecuperarSenha';
+import ResetarSenha from './containers/RecuperarSenha/ResetarSenha';
 
 class  App extends Component {
   render() {
@@ -15,6 +21,10 @@ class  App extends Component {
         <Router>
           <div className="App">
             <Route path={"/"} exact component={ base(Pedidos) } />
+
+            <Route path={"/login"} component={ base(Login) } />
+            <Route path={"/recuperar-senha"} component={ base(RecuperarSenha) } />
+            <Route path={"/recuperar-senha/:token"} component={ base(ResetarSenha) } />
           </div>
         </Router>
       </Provider>
