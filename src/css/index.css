@@ -10,12 +10,13 @@ body {
 
 :root {
   --cor-tema: #070772;
+  --cor-tema-claro: #1b4fa9;
   --cor-primaria: #0a63a7;
   --cor-secundaria: #118311;
   --cor-terciaria: #b01616;
   --cor-amarelo: #dccc1a;
 
-  --cor-perta: #000;
+  --cor-preta: #000;
   --cor-branca: #fff;
   --cor-cinza-claro: #eee;
   --cor-cinza-escuro: #222;
@@ -48,5 +49,54 @@ body {
 }
 
 .flex-center {
-  justify-content: flex-center;
+  justify-content: center;
+}
+
+/* COMPONENTS */
+
+.Barra-Topo {
+  background-color: var(--cor-preta);
+  z-index: 100;
+  padding: 10px;
+  height: 21px;
+}
+
+.Barra-Topo a {
+  color: var(--cor-branca);
+  text-decoration: none;
+  font-weight: 200;
+}
+
+.Menu {
+  background-color: var(--cor-tema);
+  width: 50px;
+  box-shadow: 0 0 5px #111;
+}
+
+.menu-open {
+  width: 180px;
+}
+
+.item-top {
+  padding: 10px 10px 0; 
+  font-size: 1.3rem;
+  cursor: pointer;
+  color: var(--cor-branca);
+}
+
+.Menu a {
+  color: var(--cor-branca);
+  text-decoration: none;
+}
+
+.menu-item {
+  height: 50px;
+}
+
+.menu-item:hover, .menu-item-active {
+  background-color: var(--cor-tema-claro);
+} 
+
+.menu-item i {
+  font-size: 1.3rem;
 }
