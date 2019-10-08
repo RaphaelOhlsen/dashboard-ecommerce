@@ -8,6 +8,19 @@ body {
 }
 
 
+:root {
+  --cor-tema: #070772;
+  --cor-primaria: #0a63a7;
+  --cor-secundaria: #118311;
+  --cor-terciaria: #b01616;
+  --cor-amarelo: #dccc1a;
+
+  --cor-perta: #000;
+  --cor-branca: #fff;
+  --cor-cinza-claro: #eee;
+  --cor-cinza-escuro: #222;
+}
+
 .full-width { width: 100%;}
 .full-height { height: 100vh;}
 
