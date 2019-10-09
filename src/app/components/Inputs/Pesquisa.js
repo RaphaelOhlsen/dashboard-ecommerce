@@ -1,5 +1,7 @@
 import React from 'react';
 
+import './Pesquisa.css';
+
 const Pesquisa = ({ valor, onChange, placeholder, onClick}) => (
   <div className="Pesquisa flex horizontal">
     <input value={valor} onChange={onChange} placeholder={placeholder} />

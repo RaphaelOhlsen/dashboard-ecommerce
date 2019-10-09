@@ -1,0 +1,28 @@
+.Paginacao {
+  display: flex;
+  justify-content: center;
+}
+
+.paginacao-item {
+  font-size: 0.9rem;
+  color: var(--cor-cinza-escuro);
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+
+.paginacao-item:first-child {
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px
+}
+
+.paginacao-item:last-child {
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px
+}
+
+.paginacao-item:hover, .paginacao-item-active {
+  background-color: VAR(--cor-cinza-escuro);
+  color: var(--cor-cinza-claro);
+  border: 1px solid var(--cor-cinza-escuro);
+}

@@ -1,5 +1,7 @@
 import React from 'react';
 
+import './index.css';
+
 import BarraTopo from './BarraTopo';
 import Menu from './Menu';
 
@@ -14,9 +16,9 @@ class DashBoard extends React.Component {
           <div className="flex horizontal">
             <BarraTopo />
           </div>
-          <div className="flex full-height">
+          <main className="">
             { this.props.children }
-          </div>
+          </main>
         </div>
       </div>
     )

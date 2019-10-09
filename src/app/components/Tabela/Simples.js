@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import './Simples.css';
+
 const TabelaSimples = ({ cabecalho, dados}) => (
   <div className="TabelaSimples">
     <table className="simples">
@@ -21,7 +23,7 @@ const TabelaSimples = ({ cabecalho, dados}) => (
               { linha["botaoDetalhes"] && (
                   <td>
                     <Link to={linha["botaoDetalhes"]}>
-                      <button>
+                      <button className="button button-danger button-small">
                         DETALHES
                       </button>
                     </Link>

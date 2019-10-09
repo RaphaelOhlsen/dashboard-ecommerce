@@ -1,0 +1,49 @@
+table.simples {
+  margin-bottom: 50px;
+  border-collapse: collapse;
+}
+
+table.simples td {
+  padding: 10px;
+  font-size: 0.9rem;
+  border-bottom: 1px solid #999
+}
+
+table.simples th {
+  background-color: var(--cor-tema);
+  padding: 10px;
+  color: var(--cor-branca); 
+  font-size: 1rem;
+}
+
+table.simples th:first-child {
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px
+}
+
+table.simples th:last-child {
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px
+}
+
+.button {
+  font-size: 1rem;
+  padding: 10px 15px;
+  margin: 5px;
+  border: 1px solid #aaa;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.button-small {
+  font-size: 0.8rem;
+  padding: 5px 8px;
+  margin: 3px;
+}
+
+.button-danger {
+  background-color: var(--cor-terciaria);
+  color: var(--cor-branca);
+  border: 0;
+}

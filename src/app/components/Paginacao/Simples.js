@@ -1,9 +1,11 @@
 import React from 'react';
 
+import './Simples.css'; 
+
 const Paginacao = ({atual, total, limite, onClick }) => {
   const numeroPaginas = Math.ceil(total / limite);
   return (
-    <div className="Paginacao flex horizontal">
+    <div className="Paginacao">
       {
         [...Array(numeroPaginas).keys()].map((numero, idx) => {
           const numeroAtualPagina = numero * limite;
