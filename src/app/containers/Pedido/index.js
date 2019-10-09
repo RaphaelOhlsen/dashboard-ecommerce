@@ -1,21 +1,26 @@
 import React, { Component } from 'react';
 
+import './index.css';
+
 import DetalhesDoPedido from './DetalhesDoPedido';
 import DetalhesDaEntrega from './DetalhesDaEntrega';
 import DetalhesDoPagamento from './DetalhesDoPagamento';
+
+import Voltar from '../../components/Links/Voltar';
  
 class Pedido extends Component {
   render(){
     return (
-      <div className="Pedidos flex vertical">
-        <div>
+      <div className="Pedidos">
+        <div className="DetalhesDoPedido">
+          <Voltar path="/" />
           <DetalhesDoPedido />
         </div>
         <div className="flex horizontal">
-          <div className="flex-1 flex vertical">
+          <div className="DetalhesDaEntrega">
             <DetalhesDaEntrega />
           </div>
-          <div className="flex-1 flex vertical">
+          <div className="DetalhesDoPagamento">
             <DetalhesDoPagamento />
           </div>
         </div>
