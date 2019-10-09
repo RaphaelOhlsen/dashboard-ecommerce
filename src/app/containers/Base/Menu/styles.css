@@ -1,0 +1,35 @@
+.Menu {
+  background-color: var(--cor-tema);
+  width: 50px;
+  box-shadow: 0 0 5px #111;
+}
+
+.menu-open {
+  width: 180px;
+}
+
+.item-top {
+  padding: 10px 10px 0; 
+  font-size: 1.3rem;
+  cursor: pointer;
+  color: var(--cor-branca);
+}
+
+.Menu a {
+  color: var(--cor-branca);
+  text-decoration: none;
+}
+
+.menu-item {
+  height: 50px;
+  display: flex;
+  flex-direction: row;
+}
+
+.menu-item:hover, .menu-item-active {
+  background-color: var(--cor-tema-claro);
+} 
+
+.menu-item i {
+  font-size: 1.3rem;
+}

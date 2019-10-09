@@ -1,12 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import './styles.css';
+
 const BarraTopo = () => (
-  <div className="Barra-Topo flex horizontal full-width">
-    <div className="flex-1 flex flex-start">
+  <div className="Barra-Topo">
+    <div className="Link-Loja">
       <a href="/">Ver Loja</a>
     </div>
-    <div className="flex-1 flex flex-end">
+    <div className="Link-Exit">
       <Link to="logout">Sair</Link>
     </div>
   </div>

@@ -8,8 +8,6 @@ import Pesquisa from '../../components/Inputs/Pesquisa';
 import Tabela from '../../components/Tabela/Simples';
 import Paginacao from '../../components/Paginacao/Simples';
 
-import Voltar from '../../components/Links/Voltar';
-
 class Pedidos extends Component {
 
   state = {

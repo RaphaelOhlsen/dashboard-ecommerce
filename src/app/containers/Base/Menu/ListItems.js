@@ -42,7 +42,7 @@ const ListItems = ({ open, history }) => {
       {
         items.map((item, idx) => (
           <Link to={item.rota} key={idx}>
-            <div className={`menu-item ${ localAtual === item.rota ? "menu-item-active" : ""} flex horizontal`} >
+            <div className={`menu-item ${ localAtual === item.rota ? "menu-item-active" : ""}`} >
               <div className="flex-1 flex flex-center">
                 {item.icone}
               </div>

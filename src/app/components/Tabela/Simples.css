@@ -9,6 +9,10 @@ table.simples td {
   border-bottom: 1px solid #999
 }
 
+table.simples td:last-child {
+  border: none;
+}
+
 table.simples th {
   background-color: var(--cor-tema);
   padding: 10px;
@@ -26,7 +30,7 @@ table.simples th:last-child {
   border-bottom-right-radius: 10px
 }
 
-.button {
+/* .button {
   font-size: 1rem;
   padding: 10px 15px;
   margin: 5px;
@@ -46,4 +50,4 @@ table.simples th:last-child {
   background-color: var(--cor-terciaria);
   color: var(--cor-branca);
   border: 0;
-}
+} */

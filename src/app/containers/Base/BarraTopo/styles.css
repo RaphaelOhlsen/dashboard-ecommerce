@@ -1,0 +1,28 @@
+.Barra-Topo {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  background-color: var(--cor-preta);
+  z-index: 100;
+  padding: 10px 20px;
+  height: 21px;
+}
+
+.Barra-Topo a {
+  color: var(--cor-branca);
+  text-decoration: none;
+  font-size: 1rem;
+}
+
+.Link-Loja, .Link-Exit {
+  display: flex;
+  flex: 1;
+}
+
+.Link-Loja {
+  justify-content: flex-start;
+}
+
+.Link-Exit {
+  justify-content: flex-end;
+}

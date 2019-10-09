@@ -1,6 +1,6 @@
 import React from 'react';
 
-import './index.css';
+import './styles.css';
 
 import BarraTopo from './BarraTopo';
 import Menu from './Menu';

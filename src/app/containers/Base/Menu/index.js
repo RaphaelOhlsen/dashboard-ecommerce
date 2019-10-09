@@ -1,6 +1,8 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 
-import ListItems from './ListItems'
+import './styles.css';
+
+import ListItems from './ListItems';
 
 class Menu extends Component {
   state = { open: true };
