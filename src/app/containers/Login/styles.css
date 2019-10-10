@@ -1,0 +1,66 @@
+.Login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  min-height: 100vh;
+}
+
+.Login .Card {
+  padding: 30px;
+  border-radius: 10px;
+  border: 0;
+  box-shadow: 0 0 5px #777;
+  background-color: var(--cor-branca);
+  width: 95%;
+  max-width: 450px;
+}
+
+.Card .wrap-Titulo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-bottom: 70px;
+}
+
+.Card .wrap-Titulo > h1 {
+  font-size: 3rem;
+  color: #14033d;
+  margin: 30px 0;
+}
+
+.Card .Input-Simples label {
+  margin: 0;
+  font-weight: 700;
+}
+
+.Card .Input-Simples input {
+  width: 80%
+}
+
+.Card .wrap-checkbox-link {
+  display: flex;
+  margin-bottom: 40px;
+}
+
+.Card .checkbox {
+  flex: 1;
+}
+
+.Card .link {
+  display: flex;
+  flex: 1;
+  align-items: center;
+}
+
+.Card a {
+  text-decoration: none;
+  color: #474747;
+}
+
+.Card .wrap-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

@@ -1,0 +1,15 @@
+:root {
+  --cor-tema: #070772;
+  --cor-tema-claro: #1b4fa9;
+  --cor-primaria: #0a63a7;
+  --cor-secundaria: #118311;
+  --cor-secundaria-clara: #79cc79;
+  --cor-terciaria: #b01616;
+  --cor-amarelo: #dccc1a;
+
+  --cor-preta: #000;
+  --cor-branca: #fff;
+  --cor-cinza-claro: #eee;
+  --cor-cinza-medio: #888;
+  --cor-cinza-escuro: #222;
+}

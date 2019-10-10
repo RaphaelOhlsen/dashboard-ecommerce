@@ -1,0 +1,54 @@
+.Recuperar-Senha {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  min-height: 100vh;
+}
+
+.Recuperar-Senha .Card {
+  padding: 30px;
+  border-radius: 10px;
+  border: 0;
+  box-shadow: 0 0 5px #777;
+  background-color: var(--cor-branca);
+  width: 95%;
+  max-width: 450px;
+}
+
+.Card .wrap-Titulo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-bottom: 50px;
+}
+
+.Card .wrap-Titulo > h1 {
+  font-size: 3rem;
+  color: #14033d;
+  margin: 30px 0;
+}
+
+.Card .wrap-Titulo > p {
+  line-height: 1.4;
+}
+
+.Card .Input-Simples label {
+  font-weight: 700;
+}
+
+.Card .Input-Simples input {
+  width: 80%;
+  margin-bottom: 50px;
+}
+
+.Card .wrap-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Card .button-success:hover {
+  background-color: var(--cor-secundaria-clara);
+}

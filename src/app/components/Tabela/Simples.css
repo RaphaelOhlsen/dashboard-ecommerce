@@ -30,24 +30,3 @@ table.simples th:last-child {
   border-bottom-right-radius: 10px
 }
 
-/* .button {
-  font-size: 1rem;
-  padding: 10px 15px;
-  margin: 5px;
-  border: 1px solid #aaa;
-  border-radius: 10px;
-  cursor: pointer;
-  font-weight: 700;
-}
-
-.button-small {
-  font-size: 0.8rem;
-  padding: 5px 8px;
-  margin: 3px;
-}
-
-.button-danger {
-  background-color: var(--cor-terciaria);
-  color: var(--cor-branca);
-  border: 0;
-} */
