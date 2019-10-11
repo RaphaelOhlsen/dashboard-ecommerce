@@ -84,7 +84,7 @@ class DetalhesDoPedido extends Component {
         <Titulo tipo="h4" titulo="Carrinho" />
         <br/>
         <Tabela 
-          cabecalho={["Produto", "Preço Uni.", "Quantidade", "Preço Total"]}
+          cabecalho={["Produto", "Preço Und.", "Quantidade", "Preço Total"]}
           dados={ dados }
         />
       </div>

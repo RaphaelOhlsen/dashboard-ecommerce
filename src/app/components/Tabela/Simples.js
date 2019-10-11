@@ -13,24 +13,23 @@ const TabelaSimples = ({ cabecalho, dados}) => (
       </thead>
       <tbody>
         {
-          dados.map((linha, idx) =>(
+          dados.map((linha, idx) => (
             <tr key={idx}>
               {
-                cabecalho.map((item, index) => (
-                  <td key={index}>{linha[item] || ""}</td>
+                cabecalho.map((item, index) => 
+                (
+                  <td className={`td-${item}`} key={index}>{linha[item] || ""}</td>
                 ))
               }
               { linha["botaoDetalhes"] && (
-                  <td>
+                  <td className="botao">
                     <Link to={linha["botaoDetalhes"]}>
                       <button className="button button-danger button-small">
                         DETALHES
                       </button>
                     </Link>
                   </td>
-              )
-              }
-              
+              )}
             </tr>
           ))
         }

@@ -10,6 +10,8 @@ import base from "./containers/HOC/Base"
 import Pedidos from './containers/Pedidos';
 import Pedido from './containers/Pedido';
 import Clientes from './containers/Clientes';
+import Cliente from './containers/Cliente';
+
 
 // CONTAINER SEM BASE
 import Login from './containers/Login';
@@ -25,7 +27,8 @@ class  App extends Component {
             <Route path={"/"} exact component={ base(Pedidos) } />
             <Route path={"/pedido/:id"} exact component={ base(Pedido) } />
 
-            <Route path={"/clientes"} exact component={ base(Clientes) } />
+            <Route path={"/clientes"} component={ base(Clientes) } />
+            <Route path={"/cliente/:email"} component={ base(Cliente) } />
 
             <Route path={"/login"} exact component={Login} />
             <Route path={"/recuperar-senha"} exact component={RecuperarSenha} />
