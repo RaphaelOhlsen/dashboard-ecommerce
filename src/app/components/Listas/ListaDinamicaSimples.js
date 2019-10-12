@@ -44,8 +44,8 @@ class ListaDinamicaSimples extends Component {
             </div>
           ))
         }
-        <div className="flex">
-          <div className="flex flex-start">
+        <div className="flex flex-center">
+          <div className="flex">
             <InputSimples
               type="text"
               value={texto}

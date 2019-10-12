@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import './styles.css';
 
 import DetalhesDoCliente from './detalhesDoCliente';
-// import DetalhesDosPedidos from './detalhesDosPedidos';
+import DetalhesDosPedidos from './detalhesDosPedidos';
 
 class Cliente extends Component {
   render() {
@@ -13,7 +13,7 @@ class Cliente extends Component {
           <DetalhesDoCliente />
         </div>
         <div className="Sub-Card">
-          {/* <DetalhesDosPedidos /> */}
+          <DetalhesDosPedidos />
         </div>
       </div>
     )
