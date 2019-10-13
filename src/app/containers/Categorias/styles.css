@@ -1,0 +1,6 @@
+.Categorias {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin: 40px 20px;
+}
