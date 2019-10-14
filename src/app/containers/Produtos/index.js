@@ -25,18 +25,18 @@ class Produtos extends Component {
         "Produto": "Mouse 1",
         "Categoria": "acessorios",
         "Disponível": "sim",
-        "botaoDetalhes": "/produtos/1asdasd99000"
+        "botaoDetalhes": "/produto/1asdasd99000"
       },
       {
         "Produto": "Mouse 2",
         "Categoria": "acessorios",
         "Disponível": "sim",
-        "botaoDetalhes": "/produtos/1awewedd99230"
+        "botaoDetalhes": "/produto/1awewedd99230"
       },{
         "Produto": "Mouse 3",
         "Categoria": "acessorios",
         "Disponível": "não",
-        "botaoDetalhes": "/produtos/2k8908dsdf"
+        "botaoDetalhes": "/produto/2k8908dsdf"
       }
     ]
     return (
