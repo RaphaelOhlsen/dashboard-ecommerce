@@ -7,7 +7,7 @@ import Button from '../../components/Button/Simples';
 import { TextoDados } from '../../components/Texto/Dados';
 import InputValor from '../../components/Inputs/InputValor';
 import InputSelect from '../../components/Inputs/Select';
-import BlocoImagens from '../../components/'
+import BlocoImagens from '../../components/Imagens/Bloco'
 
 class DetalhesProduto extends Component {
 
@@ -88,6 +88,11 @@ class DetalhesProduto extends Component {
     )
   }
 
+  onRemove = id => {
+    const { imagens } = this.state;
+    this.setState({ imagens: imagens.filter((i, idx) => idx !== id) });
+  }
+
   renderImagens(){
     const { imagens } = this.state;
     return (
@@ -95,6 +100,7 @@ class DetalhesProduto extends Component {
         <BlocoImagens
           imagens={imagens}
           handleSubmit={() => alert("Enviado")}
+          onRemove={this.onRemove}
         />
       </div>
     )
