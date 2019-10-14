@@ -18,7 +18,7 @@ const TabelaSimples = ({ cabecalho, dados}) => (
               {
                 cabecalho.map((item, index) => 
                 (
-                  <td className={`td-${item}`} key={index}>{linha[item] || ""}</td>
+                  <td key={index}>{linha[item] || ""}</td>
                 ))
               }
               { linha["botaoDetalhes"] && (

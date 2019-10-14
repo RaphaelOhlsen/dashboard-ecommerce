@@ -9,11 +9,6 @@ table.simples td {
   border-bottom: 1px solid #999
 }
 
-table.simples .td-Quantidade {
-  text-align: center;
-}
-
-
 table.simples td.botao {
   border: none;
 }
