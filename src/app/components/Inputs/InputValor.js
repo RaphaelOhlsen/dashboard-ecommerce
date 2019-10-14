@@ -22,12 +22,12 @@ class Inputvalor extends Component {
     const { value } = this.state;
     return (
       <div className="Input-Valor flex input-valor-open">
-        <div>
+        <div className="flex vertical">
           <input 
             value={value}
             onChange={this.onChange}
             name={this.props.name}
-            type={ this.props.type || "text" } />
+            type={ this.props.type || "text" }
           />
         </div>
         <div className="flex flex-center">

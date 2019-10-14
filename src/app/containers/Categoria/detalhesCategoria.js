@@ -5,6 +5,7 @@ import ButtonSimples from '../../components/Button/Simples';
 import { TextoDados } from '../../components/Texto/Dados';
 import Inputvalor from '../../components/Inputs/InputValor';
 import InputSelect from '../../components/Inputs/Select';
+import Voltar from "../../components/Links/Voltar";
 
 class DetalhesCategoria extends Component {
 
@@ -82,6 +83,7 @@ class DetalhesCategoria extends Component {
   render(){
     return (
       <div className="Detalhes-Categoria">
+        <Voltar path="/categorias" />
         { this.renderCabecalho()}
         { this.renderDados()}
       </div>

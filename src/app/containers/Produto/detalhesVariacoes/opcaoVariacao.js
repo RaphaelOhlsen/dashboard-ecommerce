@@ -2,9 +2,10 @@ import React, { Component } from 'react'
 
 import Titulo from '../../../components/Texto/Titulo';
 import Button from '../../../components/Button/Simples';
-import TextoDados from '../../../components/Texto/Dados';
+import{ TextoDados} from '../../../components/Texto/Dados';
 import InputValor from '../../../components/Inputs/InputValor';
 import InputSelect from '../../../components/Inputs/Select';
+import BlocoImagens from '../../../components/Imagens/Bloco';
 
 class OpcaoVariacao extends Component {
   state = {
@@ -35,7 +36,7 @@ class OpcaoVariacao extends Component {
           <Titulo tipo="h3" titulo={ "Variação - " + nome }
           />
         </div>
-        <div className="flex-1">
+        <div className="">
           <Button 
             type="success"
             onClick={() => alert("Salvo")}
@@ -57,7 +58,7 @@ class OpcaoVariacao extends Component {
             <InputValor
               value={ nome } noStyle
               name="nome"
-              onChange={(ev) => this.setState({ nome: ev.target.value })}
+              handleSubmit={(valor) => this.setState({ nome: valor })}
             />
           )}
         />
@@ -82,7 +83,7 @@ class OpcaoVariacao extends Component {
               value={ preco } noStyle
               name="preco"
               type="number"
-              onChange={(ev) => this.setState({ preco: Number(ev.target.value) })}
+              handleSubmit={(valor) => this.setState({ preco: Number(valor) })}
             />
           )}
         />
@@ -93,7 +94,7 @@ class OpcaoVariacao extends Component {
               value={ promocao } noStyle
               name="promocao"
               type="number"
-              onChange={(ev) => this.setState({ promocao: Number(ev.target.value) })}
+              handleSubmit={(valor) => this.setState({ promocao: Number(valor) })}
             />
           )}
         />
@@ -103,9 +104,80 @@ class OpcaoVariacao extends Component {
             <InputValor
               value={ quantidade } noStyle
               name="quantidade"
-              onChange={(ev) => this.setState({ quantidade: ev.target.value })}
+              handleSubmit={(valor) => this.setState({ quantidade: valor })}
             />
           )}
+        />
+      </div>
+    )
+  }
+
+  renderDadosEnvio() {
+    const { peso, largura, altura, comprimento } = this.state;
+    return (
+      <div className="Dados-Envio">
+        <TextoDados
+          chave="Peso (Kg)"
+          valor={(
+            <InputValor
+              value={ peso } noStyle
+              name="peso"
+              type="number"
+              handleSubmit={(valor) => this.setState({ peso: Number(valor) })}
+            />
+          )}
+        />
+        <TextoDados
+          chave="Largura (cm)"
+          valor={(
+            <InputValor
+              value={ largura } noStyle
+              name="largura"
+              type="number"
+              handleSubmit={(valor) => this.setState({ largura: Number(valor) })}
+            />
+          )}
+        />
+        <TextoDados
+          chave="Altura (cm)"
+          valor={(
+            <InputValor
+              value={ altura } noStyle
+              name="altura"
+              type="number"
+              handleSubmit={(valor) => this.setState({ altura: Number(valor) })}
+            />
+          )}
+        />
+        <TextoDados
+          chave="Comprimento (cm)"
+          valor={(
+            <InputValor
+              value={ comprimento } noStyle
+              name="comprimento"
+              type="number"
+              handleSubmit={(valor) => this.setState({ comprimento: Number(valor) })}
+            />
+          )}
+        />
+      </div>
+      
+    )
+  }
+
+  onRemove = id => {
+    const { imagens } = this.state;
+    this.setState({ imagens: imagens.filter((i, idx) => idx !== id) });
+  }
+
+  renderImagens(){
+    const { imagens } = this.state;
+    return (
+      <div className="dados-de-imagens">
+        <BlocoImagens
+          imagens={imagens}
+          handleSubmit={() => alert("Enviado")}
+          onRemove={this.onRemove}
         />
       </div>
     )

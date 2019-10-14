@@ -9,10 +9,10 @@ class Produto extends Component {
   render() {
     return (
       <div className="Produto">
-        <div className="Card">
+        <div className="Card DetalhesProduto">
           <DetalhesProduto />
         </div>
-        <div className="Card">
+        <div className="DetalhesVariacoes">
           <DetalhesVariacoes />
         </div>
       </div>

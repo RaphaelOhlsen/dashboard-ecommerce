@@ -4,3 +4,15 @@
   flex-direction: column;
   margin: 40px 20px;
 }
+
+.Produto .DetalhesProduto {
+ margin-bottom: 40px;
+}
+
+.Produto .DetalhesVariacoes {
+  margin-bottom: 40px;
+}
+
+.Variacoes {
+  margin-right: 40px;
+}

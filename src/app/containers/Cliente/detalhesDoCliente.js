@@ -4,6 +4,7 @@ import Button from '../../components/Button/Simples';
 import Titulo from '../../components/Texto/Titulo';
 import { TextoDados } from '../../components/Texto/Dados';
 import Inputvalor from '../../components/Inputs/InputValor';
+import Voltar from "../../components/Links/Voltar";
 
 class DetalhesDoCliente extends Component {
 
@@ -168,6 +169,7 @@ class DetalhesDoCliente extends Component {
   render(){
     return (
       <div className="DetalhesDoCliente">
+        <Voltar path="/clientes" />
         { this.renderCabecalho() }
         <div className="flex horizontal">
           <div className="flex-1 flex vertical">

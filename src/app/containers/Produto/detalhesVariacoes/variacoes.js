@@ -1,17 +1,19 @@
 import React, { Component } from 'react';
 
+import Titulo from '../../../components/Texto/Titulo';
 
 class Variacoes extends Component {
   state = {
     variacoes: [
-      { none:"P", id:"C8K90PFD"},
-      { none:"M", id:"T67HKPCX"},
+      { nome:"P", id:"C8K90PFD"},
+      { nome:"M", id:"T67HKPCX"},
     ]
   }
   render() {
     const { variacoes } = this.state;
     return (
-      <div className="Variacoes flex vertical">
+      <div className="Variacoes flex vertical flex-center">
+        <Titulo tipo="h2" titulo="Variações" />
         {
           variacoes.map((item, idx) => (
             <div key={idx} className="variacao-idem">

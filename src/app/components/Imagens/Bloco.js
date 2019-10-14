@@ -9,7 +9,7 @@ class BlocoImagem extends Component {
     return (
       <div className="Bloco-Imagem">
         <div>
-          <input type="file" inchange={handleSubmit} />
+          <input type="file" onChange={handleSubmit} />
         </div>
         <div className="imagens-container">
           {
