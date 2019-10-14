@@ -17,7 +17,7 @@ import Categorias from './containers/Categorias';
 import Categoria from './containers/Categoria';
 
 import Produtos from './containers/Produtos';
-// import Produto from './containers/Produto';
+import Produto from './containers/Produto';
 
 
 // CONTAINER SEM BASE
@@ -41,7 +41,7 @@ class  App extends Component {
             <Route path={"/categoria/:id"} component={ base(Categoria) } />
 
             <Route path={"/produtos"} component={ base(Produtos) } />
-            {/* <Route path={"/produto/:id"} component={ base(Produto) } /> */}
+            <Route path={"/produto/:id"} component={ base(Produto) } />
 
             <Route path={"/login"} exact component={Login} />
             <Route path={"/recuperar-senha"} exact component={RecuperarSenha} />
