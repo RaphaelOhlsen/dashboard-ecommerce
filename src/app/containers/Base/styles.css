@@ -11,3 +11,10 @@ main {
   box-shadow: 0 0 5px #777;
   background-color: var(--cor-branca);
 }
+
+.GlobalWrap {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin: 40px 40px;
+}
