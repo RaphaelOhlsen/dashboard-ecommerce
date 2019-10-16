@@ -12,3 +12,17 @@
   flex: 1;
   flex-basis: 100px;
 }
+
+.imagem-remover {
+  background-color: var(--cor-terciaria);
+  width: 35px;
+  height: 35px;
+  font-size: 2rem;
+  color: var(--cor-branca);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.imagem-remover:hover {
+  background-color: #ff9900;
+}

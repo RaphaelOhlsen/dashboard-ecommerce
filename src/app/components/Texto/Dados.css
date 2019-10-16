@@ -1,4 +1,12 @@
 .Texto-Dados {
-  display: flex;
   margin-bottom: 4px;
+}
+
+.Texto-Dados textarea{
+  padding: 8px 12px;
+  margin: 5px 0;
+  border-radius: 5px;
+  border: 1px solid var(--cor-cinza-medio);
+  font-size: 0.95rem;
+  width: 70%;
 }

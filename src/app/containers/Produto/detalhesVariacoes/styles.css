@@ -1,0 +1,17 @@
+.variacao-item {
+  background-color: var(--cor-cinza-claro);
+  color: var(--cor-cinza-escuro);
+  padding: 10px 15px;
+  border-radius: 10px;
+  margin: 5px 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.variacao-item-ativa, .variacao-item:hover {
+  background-color: var(--cor-cinza-escuro);
+  color: var(--cor-cinza-claro);
+}

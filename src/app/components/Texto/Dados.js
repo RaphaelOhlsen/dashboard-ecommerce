@@ -1,10 +1,10 @@
 import React from 'react';
 import './Dados.css'
 
-export const TextoDados = (({ chave, valor }) => (
-  <div className="Texto-Dados ">
-    <strong className="flex flex-center">{chave}:&nbsp;</strong>
-    <span className="flex flex-center">{valor}</span>
+export const TextoDados = (({ chave, valor, vertical = false }) => (
+  <div className={`Texto-Dados flex ${vertical ? "vertical" : "horizontal"}`}>
+    <strong className={`Texto-Dados flex ${!vertical ? "flex-center" : ""}`}>{chave}:&nbsp;</strong>
+    <span className={`Texto-Dados flex ${!vertical ? "flex-center" : ""}`}>{valor}</span>
   </div>
 ));
 
