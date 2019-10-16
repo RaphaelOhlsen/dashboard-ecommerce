@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 
 import './styles.css';
 
@@ -10,8 +10,8 @@ import Checkbox from '../../components/Inputs/Checkbox';
 import Button from '../../components/Button/Simples';
 
 import { connect } from 'react-redux';
-
 import * as actions from '../../actions';
+import { api, versao } from '../../config';
 
 class Login extends Component {
 
@@ -24,8 +24,8 @@ class Login extends Component {
   onChangeInput = ( field, ev) => this.setState({ [field]: ev.target.value });
   onChangeCheckbox = (field) => this.setState({ [field]: !this.state[field] });
   handleLogin() {
-    const { email, senha: password } = this.state;
-    this.props.handleLogin({email, password}, () => {
+    const { email, senha: password, opcaoLembrar  } = this.state;
+    this.props.handleLogin({email, password, opcaoLembrar}, () => {
       alert('aviso');
     });
   }
@@ -59,7 +59,10 @@ class Login extends Component {
               />
             </div>
             <div className="link">
-              <Link to="/recuperar-senha"><small>Esqueceu sua senha?</small></Link>
+              {/* <Link to="/recuperar-senha"><small>Esqueceu sua senha?</small></Link> */}
+              <a href={`${api}/${versao}/api/usuarios/recuperar-senha`}>
+                <small>Esqueceu sua senha?</small>
+              </a>
             </div>
           </div>
             <div className="wrap-button">

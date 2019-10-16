@@ -55,7 +55,7 @@ class Produtos extends Component {
             </div>
             <div className="flex vertical flex-1">
               <label>
-                <smal>Ordenar por</smal>
+                <small>Ordenar por</small>
               </label>
               <select defaultValue="">
                 <option>Aleatório</option>
