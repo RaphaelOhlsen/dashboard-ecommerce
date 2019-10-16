@@ -1,0 +1,7 @@
+.Teste {
+  padding: 30px;
+  border-radius: 10px;
+  border: 0;
+  box-shadow: 0 0 5px #777;
+  background-color: var(--cor-branca);
+}

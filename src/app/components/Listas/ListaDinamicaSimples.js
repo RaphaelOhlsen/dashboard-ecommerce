@@ -26,13 +26,13 @@ class ListaDinamicaSimples extends Component {
         {
           dados.map((item, idx) => (
             <div key={idx} className="flex horizontal">
-              <div className="item">
+              <div className="item flex flex-center">
                 <span>{item}</span>
               </div>
               {
                 onRemove &&
                 (
-                  <div className="flex-1 flex flex-center">
+                  <div className="flex-8 flex flex-start">
                     <Button 
                       type="danger" 
                       onClick={() => onRemove(idx)} 
@@ -44,7 +44,7 @@ class ListaDinamicaSimples extends Component {
             </div>
           ))
         }
-        <div className="flex flex-center">
+        <div className="flex">
           <div className="flex">
             <InputSimples
               type="text"

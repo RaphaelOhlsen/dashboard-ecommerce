@@ -22,6 +22,8 @@ import Produto from './containers/Produto';
 import Avaliacoes from './containers/Avaliacoes';
 import Avaliacao from './containers/Avaliacao';
 
+import Configuracoes from './containers/Configuracoes';
+import Perfil from './containers/Perfil';
 
 // CONTAINER SEM BASE
 import Login from './containers/Login';
@@ -49,6 +51,9 @@ class  App extends Component {
             <Route path={"/avaliacoes/:id"} component={ base(Avaliacoes) } />
             <Route path={"/avaliacao/:id"} component={ base(Avaliacao) } />
 
+            <Route path={"/configuracoes"} component={ base(Configuracoes) } />
+
+            <Route path={"/perfil"} component={ base(Perfil) } />
 
             <Route path={"/login"} exact component={Login} />
             <Route path={"/recuperar-senha"} exact component={RecuperarSenha} />
