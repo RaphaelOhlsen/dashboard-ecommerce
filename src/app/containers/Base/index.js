@@ -5,6 +5,9 @@ import './styles.css';
 import BarraTopo from './BarraTopo';
 import Menu from './Menu';
 
+import { connect } from 'react-redux';
+import * as actions from '../../actions'
+
 class DashBoard extends React.Component {
   render(){
     return (
@@ -14,7 +17,7 @@ class DashBoard extends React.Component {
         </div>
         <div className="flex vertical full-width">
           <div className="flex horizontal">
-            <BarraTopo />
+            <BarraTopo handleLogout={this.props.handleLogout}/>
           </div>
           <main className="">
             { this.props.children }
@@ -25,4 +28,4 @@ class DashBoard extends React.Component {
   }
 }
 
-export default DashBoard;
+export default connect(null, actions)(DashBoard);

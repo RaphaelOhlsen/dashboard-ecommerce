@@ -5,6 +5,8 @@ import store from './store';
 import { HashRouter as Router, Route } from 'react-router-dom';
 
 import base from "./containers/HOC/Base";
+import noAuth from "./containers/HOC/NoAuth";
+
 
 import { initApp } from './actions';
 
@@ -62,9 +64,9 @@ class  App extends Component {
 
             <Route path={"/perfil"} component={ base(Perfil) } />
 
-            <Route path={"/login"} exact component={Login} />
-            <Route path={"/recuperar-senha"} exact component={RecuperarSenha} />
-            <Route path={"/resetar-senha/:token"} component={ResetarSenha} />
+            <Route path={"/login"} exact component={noAuth(Login)} />
+            <Route path={"/recuperar-senha"} exact component={noAuth(RecuperarSenha)} />
+            <Route path={"/resetar-senha/:token"} component={noAuth(ResetarSenha)} />
           </div>
         </Router>
       </Provider>

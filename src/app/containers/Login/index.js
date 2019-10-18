@@ -18,19 +18,42 @@ class Login extends Component {
   state = {
     email: "",
     senha: "",
-    opcaoLembrar: false
+    opcaoLembrar: true,
+    erros: {}
   }
 
-  onChangeInput = ( field, ev) => this.setState({ [field]: ev.target.value });
-  onChangeCheckbox = (field) => this.setState({ [field]: !this.state[field] });
+  onChangeInput = ( field, ev) => {
+    this.setState({ [field]: ev.target.value });
+    this.validate();
+  }
+
+  onChangeCheckbox = (field) => {
+    this.setState({ [field]: !this.state[field] });
+    console.log (this.state.opcaoLembrar)
+  }
   handleLogin() {
     const { email, senha: password, opcaoLembrar  } = this.state;
+    if(!this.validate()) return;
     this.props.handleLogin({email, password, opcaoLembrar}, () => {
       alert('aviso');
     });
   }
 
+  validate(){
+    const { email, senha } = this.state;
+    const erros = {};
+
+    if(!email) erros.email = "Preencha aqui com seu email";
+    if(!senha) erros.senha = "Preencha aqui com sua senha";
+
+    this.setState({ erros });
+    console.log(erros);
+    console.log(Object.keys(erros))
+    return !(Object.keys(erros).length > 0);
+  }
+
   render() {
+    const { email, senha, opcaoLembrar, erros } = this.state;
     return (
       <div className="Login">
         <div className="Card">
@@ -40,20 +63,22 @@ class Login extends Component {
           </div>
           <Input
             label="E-mail"
-            value={this.state.email}
+            value={email}
             type="email"
+            error={erros.email}
             onChange={ ev => this.onChangeInput('email', ev)}
           />
           <Input
             label="Senha"
-            value={this.state.senha}
+            value={senha}
             type="password"
+            error={erros.senha}
             onChange={ ev => this.onChangeInput('senha', ev)}
           />
           <div className="wrap-checkbox-link">
             <div className="checkbox">
               <Checkbox 
-                value={this.state.opcacaoLembrar} 
+                value={opcaoLembrar}
                 onChange={() => this.onChangeCheckbox('opcaoLembrar')}
                 label="Lembrar?"
               />

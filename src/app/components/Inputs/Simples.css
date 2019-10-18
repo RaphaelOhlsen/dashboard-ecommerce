@@ -11,3 +11,13 @@
   font-size: 0.95rem;
 }
 
+.Input-Simples .input-error {
+  border: 1px solid red;
+  box-shadow: 0 0 5px #a31d1d;
+}
+
+.Input-Simples .small-danger {
+  color:  #a31d1d;
+  font-size: 12px;
+  display: block;
+}

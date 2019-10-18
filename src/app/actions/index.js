@@ -1,7 +1,10 @@
 import axios from 'axios';
+
 import {
-  LOGIN_USER
+  LOGIN_USER,
+  LOGOUT_USER
 } from './types';
+
 import { api, versao } from '../config';
 
 const saveToken = (usuario, opcaoLembrar) => {
@@ -30,8 +33,8 @@ const getToken = () => {
 
 const getHeaders = () => {
   return {
-    "Headers": {
-      "Authorization": `Ecommerce ${getToken()}`
+    "headers": {
+      "authorization": `Ecommerce ${getToken()}`
     }
   }
 }
@@ -54,3 +57,21 @@ export const handleLogin = ({email, password, opcaoLembrar }, callback) => {
     })
   }
 } 
+
+export const getUser = () => {
+  return function(dispatch){
+    axios.get(`${api}/${versao}/api/usuarios/`, getHeaders())
+    .then( response => {
+      saveToken(response.data.usuario, true);
+      dispatch({ type: LOGIN_USER, payload: response.data })
+    })
+    .catch( error => {
+      console.log(error);
+    })
+  }
+} 
+
+export const handleLogout = () => {
+  cleanToken();
+  return { type: LOGOUT_USER };
+}
