@@ -1,0 +1,21 @@
+.alert {
+  width: cal(100% - 20px);  
+  padding: 10px 15px;
+  margin: 10px 0;
+  border-radius: 10px;
+  border: 2px solid var(--cor-cinza-medio);
+  background-color: var(--cor-cinza-claro);
+  color: var(--cor-cinza-escuro);
+  font-size: 0.9rem;
+}
+
+.alert-danger {
+  border: 2px solid var(--cor-terciaria);
+  background-color: #f3baba;
+  color: #900909;
+}
+
+.alert span{
+  color: inherit
+} 
+

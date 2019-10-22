@@ -7,6 +7,7 @@ import {
 
 import { api, versao } from '../config';
 
+//LOCAL STORAGE
 const saveToken = (usuario, opcaoLembrar) => {
   if(!usuario.token) return null;
   const [ token1, token2, token3 ] = usuario.token.split('.');
@@ -44,6 +45,19 @@ export const initApp = () => {
   if(opcaoLembrar === 'false') cleanToken();
 }
 
+// ERROR HANDLING
+const errorHandling = error => {
+  if(!error || !error.response.data) {
+    return { status: 500, message: "Ocorreu um erro no servidor. Tente novamente."};
+  }
+  if(error.response.data.status === 401){
+    return { status: 401, message: "Você não tem autorização para acessar esses dados."};
+  }
+  if(error.response.data.errors) {
+    return { status: 400, message: error.response.data.errors}
+  }
+}
+
 // USUARIOS
 export const handleLogin = ({email, password, opcaoLembrar }, callback) => {
   return function(dispatch){
@@ -52,9 +66,7 @@ export const handleLogin = ({email, password, opcaoLembrar }, callback) => {
       saveToken(response.data.usuario, opcaoLembrar );
       dispatch({ type: LOGIN_USER, payload: response.data })
     })
-    .catch( error => {
-      console.log(error, error.response, error.response.data);
-    })
+    .catch(e => callback(errorHandling(e)));
   }
 } 
 

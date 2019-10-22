@@ -8,6 +8,7 @@ import Titulo from '../../components/Texto/Titulo';
 import Input from '../../components/Inputs/Simples';
 import Checkbox from '../../components/Inputs/Checkbox';
 import Button from '../../components/Button/Simples';
+import Alert from '../../components/Alert/Danger';
 
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
@@ -29,13 +30,15 @@ class Login extends Component {
 
   onChangeCheckbox = (field) => {
     this.setState({ [field]: !this.state[field] });
-    console.log (this.state.opcaoLembrar)
   }
+
   handleLogin() {
     const { email, senha: password, opcaoLembrar  } = this.state;
     if(!this.validate()) return;
-    this.props.handleLogin({email, password, opcaoLembrar}, () => {
-      alert('aviso');
+    this.props.handleLogin({email, password, opcaoLembrar}, (error) => {
+      // console.log(error)
+      this.setState({erros: {...this.state.erros, form: error}})
+      // console.log(this.state.erros.form)
     });
   }
 
@@ -45,10 +48,7 @@ class Login extends Component {
 
     if(!email) erros.email = "Preencha aqui com seu email";
     if(!senha) erros.senha = "Preencha aqui com sua senha";
-
     this.setState({ erros });
-    console.log(erros);
-    console.log(Object.keys(erros))
     return !(Object.keys(erros).length > 0);
   }
 
@@ -61,6 +61,8 @@ class Login extends Component {
             <Titulo tipo="h1" titulo="LOJA TI" />
             <p>Faça seu login abaixo</p>
           </div>
+          <br/><br/>
+          <Alert error={erros.form} />
           <Input
             label="E-mail"
             value={email}

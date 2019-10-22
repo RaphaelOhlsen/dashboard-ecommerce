@@ -1,0 +1,16 @@
+import React from 'react'
+import './Danger.css';
+
+const AlertDanger = ({error}) => {
+  console.log(error)
+  if(!error) return null;
+  return (
+    <div className="alert alert-danger">
+      <span>
+          {error.message}
+      </span>
+    </div>
+  )
+}
+
+export default AlertDanger;
