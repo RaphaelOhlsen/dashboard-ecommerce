@@ -3,8 +3,7 @@ import { Link } from 'react-router-dom';
 
 import './Voltar.css';
 
-const Voltar = ({path}) => (
-  <Link className="Link-Voltar" to={path}> {"< Voltar"} </Link>
-)
-
-export default Voltar;
+export default ({ path, history }) => {
+  if(path) return (<Link className="Link-Voltar" to={path}>{"< Voltar"}</Link>);
+  else return (<span className="Link-Voltar" onClick={() => history.goBack()}>{"< Voltar"}</span>)
+};

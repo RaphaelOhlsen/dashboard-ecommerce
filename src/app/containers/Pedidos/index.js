@@ -34,7 +34,7 @@ class Pedidos extends Component {
     this.getPedidos();
   }
 
-  componentWillUpdate(nextProps){
+  UNSAFE_componentWillUpdate(nextProps){
     if(!this.props.usuario && nextProps.usuario) this.getPedidos();
   }
 
@@ -67,7 +67,7 @@ class Pedidos extends Component {
         "Valor Total": formatMoney(item.pagamento.valor),
         "Data": moment(item.createdAt).format("DD/MM/YYYY"),
         "Situacao": item.pagamento.status !== 'Paga' ? item.pagamento.status : item.entrega.status,
-        "botaoDetalhes": `/pedidos/${item._id}`
+        "botaoDetalhes": `/pedido/${item._id}`
       })
     })
     return (

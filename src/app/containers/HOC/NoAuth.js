@@ -11,7 +11,7 @@ const noAuth = Component => {
       if(authorized && usuario.role.includes('admin')) history.replace('/');
     }
 
-    componentWillUpdate(nextProps){
+    UNSAFE_componentWillUpdate(nextProps){
       const { authorized, history } = this.props;
       if(
           !authorized 

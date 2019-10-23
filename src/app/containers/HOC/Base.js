@@ -16,7 +16,7 @@ const base = Component => {
         ) { history.replace('/login'); }
     }
 
-    componentWillUpdate(nextProps){
+    UNSAFE_componentWillUpdate(nextProps){
       const { history } = this.props;
       if( 
           !nextProps.authorized 
