@@ -36,7 +36,7 @@ import ResetarSenha from './containers/RecuperarSenha/ResetarSenha';
 
 class  App extends Component {
 
-  componentWillMount(){
+  componentDidMount(){
     initApp();
   }
 

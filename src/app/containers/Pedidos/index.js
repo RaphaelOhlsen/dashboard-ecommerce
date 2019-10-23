@@ -42,6 +42,7 @@ class Pedidos extends Component {
     this.setState({atual: 0}, () => {
       const { atual, limit, pesquisa } = this.state;
       const { usuario } = this.props;
+      // if (!pesquisa) return null;
       if(!usuario) return null;
       const loja = usuario.loja;
       this.props.getPedidosPesquisa(pesquisa, atual, limit, loja);

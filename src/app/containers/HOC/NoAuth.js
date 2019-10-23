@@ -5,7 +5,7 @@ import * as actions from '../../actions';
 const noAuth = Component => {
   class ComponentNoAuth extends React.Component {
 
-    componentWillMount() {
+    componentDidMount() {
       const { usuario, getUser, authorized, history } = this.props;
       getUser();
       if(authorized && usuario.role.includes('admin')) history.replace('/');

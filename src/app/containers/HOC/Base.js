@@ -6,7 +6,7 @@ import * as actions from '../../actions';
 const base = Component => {
   class ComponentBase extends React.Component {
 
-    componentWillMount() {
+    componentDidMount() {
       const { usuario,getUser, authorized, history } = this.props;
       getUser();
       if(
