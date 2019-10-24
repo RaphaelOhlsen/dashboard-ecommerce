@@ -7,6 +7,9 @@ import Pesquisa from '../../components/Inputs/Pesquisa';
 import Tabela from '../../components/Tabela/Simples';
 import Paginacao from '../../components/Paginacao/Simples';
 
+import {connect} from 'react-redux';
+import * as actions from '../../actions/clientes';
+
 class Clientes extends Component {
 
   state = {
@@ -19,30 +22,21 @@ class Clientes extends Component {
   changeNumeroAtual = (atual) => this.setState({ atual });
 
   render(){
+    
     const { pesquisa } = this.state;
-    const dados = [
-      {
-        "Cliente": "Cliente 1",
-        "E-mail": "cliente1@gmail.com",
-        "Telefone": "27993162448",
-        "CPF": "123.456.789-01",
-        "botaoDetalhes": "/cliente/1"
-      },
-      {
-        "Cliente": "Cliente 2",
-        "E-mail": "client21@gmail.com",
-        "Telefone": "27993162448",
-        "CPF": "12345678901",
-        "botaoDetalhes": "/cliente/2"
-      },
-      {
-        "Cliente": "Cliente 3",
-        "E-mail": "cliente3@gmail.com",
-        "Telefone": "27993162448",
-        "CPF": "12345678901",
-        "botaoDetalhes": "/cliente/3"
-      }
-    ]
+    const { clientes } = this.props;
+
+    const dados = [];
+    (clientes ? clientes.docs : []).forEach((item) => {
+      dados.push({
+        "Cliente": item.nome,
+        "E-mail": item.usuario ? item.usuario.email : "",
+        "Telefone": item.telefones[0],
+        "CPF": item.cpf,
+        "botaoDetalhes": `/cliente/${item._id}`
+      })
+    })
+
     return (
       <div className="Clientes">
         <div className="Card">
@@ -72,4 +66,9 @@ class Clientes extends Component {
   }
 }
 
-export default Clientes;
+const mapStatetoProps = state => ({
+  clientes: state.cliente.clientes,
+  usuario: state.auth.usuario
+})
+
+export default connect(mapStatetoProps,actions)(Clientes);
