@@ -22,7 +22,7 @@ class ListaDinamicaSimples extends Component {
     const { dados, onRemove } = this.props;
     const { texto } = this.state;
     return (
-      <div className="flex-vertical">
+      <div className="ListaDinamica flex-vertical">
         {
           dados.map((item, idx) => (
             <div key={idx} className="flex horizontal">

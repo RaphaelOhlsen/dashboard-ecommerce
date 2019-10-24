@@ -1,5 +1,5 @@
 import React from 'react'
-import './Danger.css';
+import './styles.css';
 
 const AlertDanger = ({error}) => {
   if(!error) return null;

@@ -12,7 +12,13 @@
 .alert-danger {
   border: 2px solid var(--cor-terciaria);
   background-color: #f3baba;
-  color: #900909;
+  color: #610505;
+}
+
+.alert-success {
+  border: 2px solid var(--cor-secundaria);
+  background-color: #bff3ba;
+  color: #175c11
 }
 
 .alert span{
