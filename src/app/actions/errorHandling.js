@@ -1,5 +1,10 @@
 const errorHandling = error => {
-  if(!error || !error.response.data) {
+
+  if(error.message === "Network Error") {
+    return { status: 500, message: "Erro de conexão de rede."};
+  }
+
+  if(!error || !error.response.data || error.message === "Network Error") {
     return { status: 500, message: "Ocorreu um erro no servidor. Tente novamente."};
   }
   if(error.response.data.status === 401){
@@ -7,7 +12,9 @@ const errorHandling = error => {
   }
 
   const _errors = error.response.data.errors;
-  console.log(_errors);
+  console.log(typeof(_errors));
+
+
 
   if(_errors && typeof _errors === 'string') {
     return { status: 400, message: _errors}
