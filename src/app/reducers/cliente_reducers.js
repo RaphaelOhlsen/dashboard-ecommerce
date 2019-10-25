@@ -34,7 +34,8 @@ export default (state = {}, action ) => {
         return {
           ...state,
           cliente: { ...state.cliente, deletado: action.payload.deletado }
-
+        }
+        
     default:
       return state;
   }
