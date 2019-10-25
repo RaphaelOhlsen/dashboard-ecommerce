@@ -13,3 +13,9 @@
   background-color: var(--cor-cinza-claro);
   color: var(--cor-cinza-medio);
 }
+
+.small-danger {
+  color:  #a31d1d;
+  font-size: 12px;
+  display: block;
+}
