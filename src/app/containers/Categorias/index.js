@@ -3,62 +3,62 @@ import React, { Component } from 'react';
 import './styles.css';
 
 import Titulo from '../../components/Texto/Titulo';
-import Pesquisa from '../../components/Inputs/Pesquisa';
 import Tabela from '../../components/Tabela/Simples';
-import Paginacao from '../../components/Paginacao/Simples';
+
+import { Link } from 'react-router-dom';
+
+import { connect } from 'react-redux';
+import * as actions from '../../actions/categorias';
 
 class Categorias extends Component {
 
-  state = {
-    pesquisa: "",
-    atual: 0
+  getCategorias(){
+    const { usuario } =this.props;
+    if(!usuario) return null;
+    this.props.getCategorias(usuario.loja);
   }
 
-  onChangePesquisa = (ev) => this.setState({ pesquisa: ev.target.value });
+  componentWillMount(){
+    this.getCategorias();
+  }
 
-  changeNumeroAtual = (atual) => this.setState({ atual });
+  componentWillUpdate(nextProps){
+    if( !this.props.usuario && nextProps.usuario ) this.getCategorias();
+  }
+
+  renderBotaoNovo(){
+    return (
+      <Link
+        className="button button-success button-small"
+        to="categorias/nova"
+      >
+        <i className="fas fa-plus"></i>
+        <span>&nbsp;&nbsp;Nova Categoria</span>
+      </Link>
+    )
+  }
 
   render(){
-    const { pesquisa } = this.state;
-    
-    const dados = [
-      {
-        "Categoria": "Acessórios",
-        "Qtd. de Produtos": 15,
-        "botaoDetalhes": "/categoria/acessorios"
-      },
-      {
-        "Categoria": "Computadores",
-        "Qtd. de Produtos": 5,
-        "botaoDetalhes": "/categoria/computadores"
-      },
-      {
-        "Categoria": "Monitores",
-        "Qtd. de Produtos": 7,
-        "botaoDetalhes": "/categoria/monitores"
-      }
-    ]
+    const { categorias } = this.props;
+    const dados = [];
+
+    (categorias || []).forEach(item => {
+      dados.push({
+        "Categoria": item.nome,
+        "Qtd. de Produtos": item.produtos.length,
+        "botaoDetalhes": `/categoria/${item._id}`
+      });
+    });
+
     return (
       <div className="Categorias">
         <div className="Card">
           <Titulo tipo="h1" titulo="Categorias" />
           <br />
-          <Pesquisa 
-            valor = { pesquisa }
-            placeholder = {"Pesquise aqui pelo nome da categoria..."}
-            onChange = { (ev) => this.onChangePesquisa(ev)}
-            onClick={() => alert('Pesquisar')}
-          />
-          <br />
+          { this.renderBotaoNovo() }
           <Tabela 
             cabecalho={["Categoria", "Qtd. de Produtos"]}
             dados={dados}
-          />
-          <Paginacao 
-            atual={this.state.atual}
-            total={120} 
-            limite={20} 
-            onClick={(numeroAtual) => this.changeNumeroAtual(numeroAtual)}
           />
         </div>
         
@@ -67,4 +67,9 @@ class Categorias extends Component {
   }
 }
 
-export default Categorias;
+const mapPropsToState = state => ({
+  categorias: state.categoria.categorias,
+  usuario: state.auth.usuario
+});
+
+export default connect(mapPropsToState, actions)(Categorias);
