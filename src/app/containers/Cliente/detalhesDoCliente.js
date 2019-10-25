@@ -1,26 +1,49 @@
 import React, { Component } from 'react';
 
+import moment from 'moment';
+
 import Button from '../../components/Button/Simples';
 import Titulo from '../../components/Texto/Titulo';
 import { TextoDados } from '../../components/Texto/Dados';
 import Inputvalor from '../../components/Inputs/InputValor';
 import Voltar from "../../components/Links/Voltar";
 
+import { connect } from 'react-redux';
+import * as actions from '../../actions/clientes';
+import AlertGeral from '../../components/Alert/Geral';
+
 class DetalhesDoCliente extends Component {
 
-  state = {
-    nome: "Cliente 1",
-    CPF: "111.222.333-44",
-    telefone: "12 1234-5678",
-    dataDeNascimento: "10/01/1995",
-    email: "cliente1@hotmail.com",
+ constructor(props){
+   super();
+   this.state = {
+     ...this.generateStateCliente(props),
+     aviso: null,
+     erros: {}
+   }
+ }
 
-    endereco: "Rua Teste, 123",
-    bairro: "Centro",
-    cidade: "Serra",
-    estado: "ES",
-    cep: "29078-30"
-  }
+ componentWillUpdate(nextProps){
+   if(
+     (!this.props.cliente && nextProps.cliente) ||
+     (this.props.cliente && nextProps.cliente && this.props.cliente.updatedAt !== nextProps.cliente.updatedAt)
+   ) this.setState(this.generateStateCliente(nextProps));
+ }
+
+  generateStateCliente = (props) => ({
+    nome: props.cliente ? props.cliente.nome : "",
+    CPF: props.cliente ? props.cliente.cpf : "",
+    telefone: props.cliente ? props.cliente.telefones[0] : "",
+    dataDeNascimento: props.cliente ? moment(props.cliente.dataDeNascimento).format("DD/MM/YYYY") : "",
+    email: props.cliente && props.cliente.usuario ? props.cliente.usuario.email : "",
+
+    endereco: props.cliente && props.cliente.endereco ? props.cliente.endereco.local : "",
+    numero: props.cliente && props.cliente.endereco ? props.cliente.endereco.numero : "",
+    bairro: props.cliente && props.cliente.endereco ? props.cliente.endereco.bairro : "",
+    cidade: props.cliente && props.cliente.endereco ? props.cliente.endereco.cidade : "",
+    estado: props.cliente && props.cliente.endereco ? props.cliente.endereco.estado : "",
+    cep: props.cliente && props.cliente.endereco ? props.cliente.endereco.CEP : "",
+  })
 
   handleSubmit = (field, value) => { 
     this.setState({ [field]: value });
@@ -184,4 +207,9 @@ class DetalhesDoCliente extends Component {
   }
 }
 
-export default DetalhesDoCliente;
+const mapStateToProps =state => ({
+  usuario: state.auth.usuario,
+  cliente: state.cliente.cliente
+});
+
+export default connect(mapStateToProps, actions)(DetalhesDoCliente);

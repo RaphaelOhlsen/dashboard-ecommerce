@@ -1,8 +1,8 @@
 const errorHandling = error => {
 
-  if(error.message === "Network Error") {
-    return { status: 500, message: "Erro de conexão de rede."};
-  }
+  // if(error.message === "Network Error") {
+  //   return { status: 500, message: "Erro de conexão de rede."};
+  // }
 
   if(!error || !error.response.data || error.message === "Network Error") {
     return { status: 500, message: "Ocorreu um erro no servidor. Tente novamente."};
