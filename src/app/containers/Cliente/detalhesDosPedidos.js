@@ -3,34 +3,56 @@ import moment from 'moment';
 
 import Titulo from '../../components/Texto/Titulo';
 import Tabela from '../../components/Tabela/Simples';
+import Paginacao from '../../components/Paginacao/Simples';
+
+import * as actions from '../../actions/clientes';
+import { connect } from 'react-redux';
+import { formatMoney }from '../../actions'; 
 
 
 class DetalhesDosPedidos extends Component {
   
+  state = {
+    atual: 0,
+    limit: 5
+  }
+
+  getPedidos(){
+    const { atual, limit } = this.state;
+    const { usuario, id } = this.props;
+
+    if(!usuario || !id ) return null;
+    this.props.getClientePedidos(id, atual, limit, usuario.loja);
+
+  }
+
+  componentWillMount(){
+    this.getPedidos();
+  }
+
+  componentWillUpdate(nextProps){
+    if(!this.props.usuario && nextProps.usuario) this.getPedidos();
+  }
+
+  changeNumeroAtual = atual => this.setState({atual}, () => this.getPedidos());
+
   render(){
-    const dados = [
-      {
-        "ID": "89809841",
-        "Valor Total": 89.90,
-        "Data": moment().toISOString(),
-        "Situacao": "Aguardando Pagamento",
-        "botaoDetalhes": "/pedido/89809841"
-      },
-      {
-        "ID": "K9CTLKLKJASD",
-        "Valor Total": 105.90,
-        "Data": moment().toISOString(),
-        "Situacao": "Aguardando Pagamento",
-        "botaoDetalhes": "/pedido/K9CTLKLKJASD"
-      },
-      {
-        "ID": "8SDFSDF9857",
-        "Valor Total": 126.7,
-        "Data": moment().toISOString(),
-        "Situacao": "Pagamanento Concluido",
-        "botaoDetalhes": "/pedido/8SDFSDF9857"
-      }
-    ]
+    const { clientePedidos } = this.props;
+    console.log(this.props.id)
+    if(!clientePedidos) return (<div>Teste</div>);
+
+    const dados = [];
+
+    (clientePedidos ? clientePedidos.docs : []).forEach((item) => {
+      dados.push({
+        "ID": item._id,
+        "Valor Total": formatMoney(item.pagamento.valor),
+        "Data": moment(item.createdAt).format("DD/MM/YYYY"),
+        "Situacao": `${item.pagamento.status || "-"} / ${item.entrega.status || "-"}`,
+        "botaoDetalhes": `/pedido/${item._id}`
+      });
+    });
+
     return (
       <div className="Card">
         <Titulo tipo="h3" titulo="Pedidos Feitos" />
@@ -39,9 +61,20 @@ class DetalhesDosPedidos extends Component {
           cabecalho={["ID", "Valor Total", "Data", "Situacao"]}
           dados={dados}  
         />
+        <Paginacao
+          atual={this.state.atual}
+          total={ this.props.clientePedidos ? this.props.clientePedidos.total : 0}
+          limite={this.state.limit}
+          onClick={(numeroAtual) => this.changeNumeroAtual(numeroAtual)}
+        />
       </div>
     )
   }
 }
 
-export default DetalhesDosPedidos;
+const mapStateToProps = state => ({
+  usuario: state.auth.usuario,
+  clientePedidos: state.cliente.clientePedidos
+})
+
+export default connect(mapStateToProps, actions)(DetalhesDosPedidos);

@@ -22,13 +22,14 @@ class Cliente extends Component {
   }
 
   render() {
+    
     return (
       <div className="Cliente">
         <div className="Card">
           <DetalhesDoCliente history={this.props.history}/>
         </div>
         <div className="Sub-Card">
-          <DetalhesDosPedidos id={this.props.match.id}/>
+          <DetalhesDosPedidos id={this.props.match.params.id}/>
         </div>
       </div>
     )
