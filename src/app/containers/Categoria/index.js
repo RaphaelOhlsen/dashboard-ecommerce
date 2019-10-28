@@ -5,6 +5,9 @@ import './styles.css';
 import DetalhesCategoria from './detalhesCategoria';
 import ListaDeProdutos from './listaDeProdutos';
 
+import { connect } from 'react-redux';
+import * as actions from '../../actions/categorias';
+
 class Categoria extends Component {
 
   componentDidMount(){
@@ -23,7 +26,7 @@ class Categoria extends Component {
       <div className="Categoria">
         <div className="Card">
           <div>
-            <DetalhesCategoria history={this.history} />
+            <DetalhesCategoria history={this.props.history} />
           </div>
           <div>
             <ListaDeProdutos />
@@ -34,4 +37,8 @@ class Categoria extends Component {
   }
 }
 
-export default Categoria;
+const mapStateToProps = state => ({
+  usuario: state.auth.usuario
+})
+
+export default connect(mapStateToProps, actions)(Categoria);

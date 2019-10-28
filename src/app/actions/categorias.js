@@ -43,7 +43,7 @@ export const getCategoria = (id, loja) => {
 
 export const limparCategoria = () => ({ type: LIMPAR_CATEGORIA });
 
-export const getCategoriaProduto = (id, atual, limit, loja) => {
+export const getCategoriaProdutos = (id, atual, limit, loja) => {
   return function(dispatch){
     axios.get(`${api}/${versao}/api/categorias/${id}/produtos?loja=${loja}&offset=${atual}&limit=${limit}`, 
     getHeaders()
@@ -64,7 +64,7 @@ export const updateCategoria = (categoria, id, loja, cb) => {
       dispatch({ type: GET_CATEGORIA, payload: response.data });
       cb(null);
     })
-    .catch(e => cb(errorHandling));
+    .catch(e => cb(errorHandling(e)));
   }
 }
 
@@ -75,6 +75,6 @@ export const removerCategoria = (id, loja, cb) => {
       dispatch({ type: REMOVE_CATEGORIA, payload: response.data });
       cb(null);
     })
-    .catch(e => cb(errorHandling));
+    .catch(e => cb(errorHandling(e)));
   }
 }
