@@ -12,7 +12,7 @@ import * as actions from '../../actions/categorias';
 class NovaCategoria extends Component {
 
   state = {
-    nome: "",
+    nome: "teste",
     codigo: "",
     erros: {},
     aviso: null
