@@ -7,6 +7,9 @@ import Inputvalor from '../../components/Inputs/InputValor';
 import InputSelect from '../../components/Inputs/Select';
 import Voltar from "../../components/Links/Voltar";
 
+import { connect } from 'react-redux';
+import * as actions from '../../actions/categorias';
+
 class DetalhesCategoria extends Component {
 
   state = {
@@ -91,4 +94,8 @@ class DetalhesCategoria extends Component {
   }
 }
 
-export default DetalhesCategoria;
+const mapStateToProps = state => ({
+  usuario: state.auth.usuario
+})
+
+export default connect(mapStateToProps, actions)(DetalhesCategoria);
