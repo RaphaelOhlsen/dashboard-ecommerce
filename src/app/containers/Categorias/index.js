@@ -32,7 +32,7 @@ class Categorias extends Component {
         className="button button-success button-small"
         to="categorias/nova"
       >
-        <i className="fas fa-plus"></i>
+        <i style={{color: 'red'}}className="fas fa-plus"></i>
         <span>&nbsp;&nbsp;Nova Categoria</span>
       </Link>
     )

@@ -12,4 +12,5 @@ export const LOGIN_USER = "LOGIN_USER",
              LIMPAR_CLIENTE = "LIMPAR_CLIENTE",
              REMOVE_CLIENTE = "REMOVE_CLIENTE",
              
-             GET_CATEGORIAS = "GET_CATEGORIAS"
+             GET_CATEGORIAS = "GET_CATEGORIAS",
+             GET_CATEGORIA = "GET_CATEGORIA"
