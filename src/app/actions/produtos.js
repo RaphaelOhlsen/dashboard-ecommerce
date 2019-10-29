@@ -4,6 +4,8 @@ import { api, versao } from '../config';
 import errorHandling from './errorHandling';
 import {
   GET_PRODUTOS,
+  GET_PRODUTO,
+  LIMPAR_PRODUTO
   
 } from './types';
 
@@ -22,3 +24,24 @@ export const getProdutosPesquisa = (termo, ordem, atual, limit, loja) => {
     .catch(errorHandling)
   }
 }
+
+export const novoProduto = (produto, loja, cb) => {
+  return function(dispatch){
+    axios.post(`${api}/${versao}/api/produtos&loja=${loja}`, {
+      titulo: produto.nome,
+      descricao: produto.descricao,
+      categoria: produto.categoria,
+      preco: produto.preco,
+      promocao: produto.promocao,
+      sku: produto.sku
+    }, getHeaders())
+    .then(response => {
+      dispatch({ type: GET_PRODUTO, payload: response.data });
+      cb(null)
+    )}
+    .catch(e => cb(errorHandling(e)));
+  }
+}
+
+
+export const limparProduto = () => ({ type: LIMPAR_PRODUTO });
