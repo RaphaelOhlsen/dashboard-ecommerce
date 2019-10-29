@@ -6,39 +6,61 @@ import Titulo from '../../components/Texto/Titulo';
 import Pesquisa from '../../components/Inputs/Pesquisa';
 import Tabela from '../../components/Tabela/Simples';
 import Paginacao from '../../components/Paginacao/Simples';
+import { Link } from 'react-router-dom';
+
+import * as actions from '../../actions/produtos';
+import { connect } from 'react-redux';
 
 class Produtos extends Component {
 
   state = {
     pesquisa: "",
-    atual: 0
+    atual: 0,
+    limit: 5,
+    ordem: "alfabetica_a-z"
+  }
+
+  getProdutos(props){
+    const { atual, limit, pesquisa, ordem } = this.state;
+    const { usuario }= props;
+    
+    if(!usuario) return null;
+
+    if(pesquisa) props.getProdutosPesquisa(pesquisa, ordem, atual, limit, usuario.loja);
+    else props.getProdutos(ordem, atual, limit, usuario.loja);
+  }
+
+  componentDidUpdate(){
+    this.getProdutos(this.props);
+  }
+
+  componentWillUpdate(nextProps){
+    if(!this.props.usuario && nextProps.usuario) this.getProdutos(nextProps);
+  }
+
+  handleSubmitPesquisa(){
+    this.setState({ atual: 0}, () => this.getProdutos(this.props));
   }
 
   onChangePesquisa = (ev) => this.setState({ pesquisa: ev.target.value });
 
-  changeNumeroAtual = (atual) => this.setState({ atual });
+  changeNumeroAtual = (atual) => this.setState({ atual }, () => this.getProdutos(this.props));
+
+  changeOrdem = (ev) => this.setState({ ordem: ev.target.value }, () => this.getProdutos(this.props));
 
   render(){
-    const { pesquisa } = this.state;
-    const dados = [
-      {
-        "Produto": "Mouse 1",
-        "Categoria": "acessorios",
-        "Disponível": "sim",
-        "botaoDetalhes": "/produto/1asdasd99000"
-      },
-      {
-        "Produto": "Mouse 2",
-        "Categoria": "acessorios",
-        "Disponível": "sim",
-        "botaoDetalhes": "/produto/1awewedd99230"
-      },{
-        "Produto": "Mouse 3",
-        "Categoria": "acessorios",
-        "Disponível": "não",
-        "botaoDetalhes": "/produto/2k8908dsdf"
-      }
-    ]
+    const { pesquisa, ordem } = this.state;
+    const { produtos } = this.props;
+    const dados = [];
+    (produtos ? produtos.docs : []).forEach(item => {
+      dados.push({
+        "Produto": item.titulo,
+        "Categoria": item.categoria ? item.categoria.nome : "",
+        "Disponível": item.disponibilidade ? "sim" : "não",
+        "botaoDetalhes": `/produto/${item._id}`
+      })
+    })
+
     return (
       <div className="Produtos">
         <div className="Card">
@@ -50,19 +72,19 @@ class Produtos extends Component {
                 valor = { pesquisa }
                 placeholder = {"Pesquise pelo produto, descrição ou categoria"}
                 onChange = { (ev) => this.onChangePesquisa(ev)}
-                onClick={() => alert('Pesquisar')}
+                onClick={() => this.handleSubmitPesquisa()}
               />
             </div>
             <div className="flex vertical flex-1">
               <label>
                 <small>Ordenar por</small>
               </label>
-              <select defaultValue="">
-                <option>Aleatório</option>
-                <option value={"oaA-Z"}>Alfabética A-Z</option>
-                <option value={"oaZ-A"}>Alfabética Z-A</option>
-                <option value={"op-menor"}>Preço Menor</option>
-                <option value={"op-maior"}>Preço Maior</option>
+              <select value={ordem} onChange={this.changeOrdem}>
+                <option value={""}>Aleatório</option>
+                <option value={"alfabetica_a-z"}>Alfabética A-Z</option>
+                <option value={"alfabetica_z-a"}>Alfabética Z-A</option>
+                <option value={"preco-crescente"}>Preço Menor</option>
+                <option value={"preco-decrescente"}>Preço Maior</option>
               </select>
             </div>
           </div>
@@ -73,8 +95,8 @@ class Produtos extends Component {
           />
           <Paginacao 
             atual={this.state.atual}
-            total={120} 
-            limite={20} 
+            total={this.props.produtos ? this.props.produtos.total : 0} 
+            limite={this.state.limit} 
             onClick={(numeroAtual) => this.changeNumeroAtual(numeroAtual)}
           />
         </div>
@@ -84,4 +106,9 @@ class Produtos extends Component {
   }
 }
 
-export default Produtos;
+const mapStateToProps = state => ({
+  usuario: state.auth.usuario,
+  produtos: state.produto.produtos
+});
+
+export default connect(mapStateToProps, actions)(Produtos);
