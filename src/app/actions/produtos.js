@@ -38,7 +38,7 @@ export const novoProduto = (produto, loja, cb) => {
     .then(response => {
       dispatch({ type: GET_PRODUTO, payload: response.data });
       cb(null)
-    )}
+    })
     .catch(e => cb(errorHandling(e)));
   }
 }
