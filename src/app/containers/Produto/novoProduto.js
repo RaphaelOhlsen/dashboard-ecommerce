@@ -25,6 +25,42 @@ class novoProduto extends Component {
     erros: {}
   }
 
+  getCategorias(props){
+    const { usuario, getCategorias } = props;
+    if(usuario) getCategorias(usuario.loja);
+  }
+
+  componentDidMount(){
+    this.getCategorias(this.props);
+  }
+
+  componentWillUpdate(nextProps){
+    if(!this.props.usuario && nextProps.usuario ) this.getCategorias(nextProps);
+  }
+
+  validade(){
+    const { nome, descricao, categoria, preco, sku } = this.state;
+    const erros = {};
+
+    if(!nome) erros.nome = "Preencha aqui com o nome do produto";
+    if(!descricao) erros.descricao = "Preencha aqui com a descriçao do produto";
+    if(!categoria) erros.categoria = "Preencha aqui com a categoria do produto";
+    if(!preco) erros.preco = "Preencha aqui com o preço do produto";
+    if(!sku) erros.sku = "Preencha aqui com o sku do produto";
+
+    this.setState({ erros });
+    return !( Object.keys(erros).length > 0 );
+  }
+
+  salvarProduto(){
+    const { usuario, salvarProduto } = this.props;
+    if(!usuario) return null;
+    if(!this.validade()) return null;
+    salvarProduto(this.state, usuario.loja, error => {
+      this.setState({ aviso: { status: !error, msg: error ? error.message: "Produto criado com sucesso"}});
+    })
+  }
+
   renderCabecalho(){
     const { nome } = this.state;
     return (
@@ -43,7 +79,7 @@ class novoProduto extends Component {
     )
   }
 
-  onChangeInput = (field, value) => this.setState({[field]: value})
+  onChangeInput = (field, value) => this.setState({[field]: value}, () => this.validade());
 
   renderDados(){
     const { nome, descricao, categoria, preco, promocao, sku, erros} = this.state;
@@ -54,7 +90,7 @@ class novoProduto extends Component {
           name="nome"
           label="Nome:"
           value={nome}
-          erro={erros.nome}
+          error={erros.nome}
           onChange={ev => this.onChangeInput("nome", ev.target.value)}
         />
         <br/>
@@ -65,6 +101,7 @@ class novoProduto extends Component {
               name="categoria"
               onChange={ev => this.onChangeInput("categoria", ev.target.value)}
               value={categoria}
+              error={erros.categoria}
               opcoes={[
                 { label: "Selecionar...", value: ""},
                 ...(categorias || []).map(item => ({ label: item.nome, value: item._id}))
@@ -74,7 +111,10 @@ class novoProduto extends Component {
         />
         <br/>
         <TextoDados 
+          chave="Descricao"
+          vertical
           valor={(
+           <div>
             <textarea 
               name={'descricao'}
               onChange={ev => this.onChangeInput("descricao", ev.target.value)}
@@ -82,6 +122,8 @@ class novoProduto extends Component {
               rows="10"
               style={{ resize: "none" }}
             />
+            { erros.descricao && (<small className="small-danger">{erros.descricao}</small>)}
+           </div>
           )}
         />
         <InputSimples 
@@ -89,15 +131,22 @@ class novoProduto extends Component {
           label="Preço:"
           type="number"
           value={preco}
-          erro={erros.preco}
+          error={erros.preco}
           onChange={ev => this.onChangeInput("preco", ev.target.value)}
         />
-        
+        <InputSimples 
+          name="promocao"
+          label="Valor em Promoção:"
+          type="number"
+          value={promocao}
+          error={erros.promocao}
+          onChange={ev => this.onChangeInput("promocao", ev.target.value)}
+        />
         <InputSimples 
           name="sku"
-          label="Sku:"
+          label="SKU:"
           value={sku}
-          erro={erros.sku}
+          error={erros.sku}
           onChange={ev => this.onChangeInput("sku", ev.target.value)}
         />
       </div>
@@ -126,9 +175,9 @@ class novoProduto extends Component {
 }
 
 const MapStateToProps = state => ({
-  produto: state.produtos.produto,
-  categorias: state.categorias.categorias,
+  produto: state.produto.produto,
+  categorias: state.categoria.categorias,
   usuario: state.auth.usuario
 })
 
-export default connect(MapStateToProps, actionsProdutos, actionsCategorias)(novoProduto);
+export default connect(MapStateToProps, {...actionsProdutos, ...actionsCategorias})(novoProduto);
