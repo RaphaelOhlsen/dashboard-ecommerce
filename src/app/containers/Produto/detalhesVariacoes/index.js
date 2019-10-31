@@ -4,6 +4,9 @@ import '../styles.css'
 
 import Variacoes from "./variacoes";
 import OpcaoVariacao from './opcaoVariacao';
+import NovaVariacao from './novaVariacao';
+
+import { connect } from 'react-redux';
 
 class DetalhesVariacoes extends Component {
   render() {
@@ -13,11 +16,15 @@ class DetalhesVariacoes extends Component {
           <Variacoes />
         </div>
         <div className="Card flex-8">
-          <OpcaoVariacao />
+          { !this.props.variacao ? <NovaVariacao /> : <OpcaoVariacao />}
         </div>  
       </div>
     )
   }
 }
 
-export default DetalhesVariacoes;
+const mapStateToProps = state => ({
+  variacao: state.variacao.variacao
+})
+
+export default connect(mapStateToProps)(DetalhesVariacoes);

@@ -3,11 +3,13 @@ import React, { Component } from 'react';
 import './styles.css';
 
 import Titulo from '../../components/Texto/Titulo';
+import { api } from '../../config';
 
 class BlocoImagem extends Component {
   
   render() {
     const { imagens, handleSubmit, onRemove } = this.props;
+    console.log(imagens)
     return (
       <div className="Bloco-Imagem">
         <div className="flex horizontal">
@@ -23,7 +25,7 @@ class BlocoImagem extends Component {
             imagens.map((src,idx) => (
               <div
                 className="imagem-container flex flex-center"
-                style={{ backgroundImage: `url("${src}")`}}
+                style={{ backgroundImage: `url("${api}/public/images/${src}")`}}
                 key={idx}
               >
                 <div className="imagem-remover flex flex-center" onClick={() => onRemove(idx)}>

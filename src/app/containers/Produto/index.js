@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import "./styles.css";
 
 import DetalhesProduto from "./detalhesProduto";
-import DetalhesVariacoes from "./detalhesVariacoes";
+// import DetalhesVariacoes from "./detalhesVariacoes";
 
 import { connect } from 'react-redux';
 import * as actionsProdutos from '../../actions/produtos';
