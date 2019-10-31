@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import "./styles.css";
 
 import DetalhesProduto from "./detalhesProduto";
-// import DetalhesVariacoes from "./detalhesVariacoes";
+import DetalhesVariacoes from "./detalhesVariacoes";
 
 import { connect } from 'react-redux';
 import * as actionsProdutos from '../../actions/produtos';
@@ -26,9 +26,9 @@ class Produto extends Component {
         <div className="Card DetalhesProduto">
           <DetalhesProduto history={this.props.history}/>
         </div>
-        {/* <div className="DetalhesVariacoes">
+        <div className="DetalhesVariacoes">
           <DetalhesVariacoes />
-        </div> */}
+        </div>
       </div>
     )
   }

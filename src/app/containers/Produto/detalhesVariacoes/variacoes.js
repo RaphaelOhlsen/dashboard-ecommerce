@@ -3,34 +3,73 @@ import React, { Component } from 'react';
 import './styles.css';
 
 import Titulo from '../../../components/Texto/Titulo';
+import { connect } from 'react-redux';
+import * as actions from '../../../actions/variacao'
 
 class Variacoes extends Component {
   state = {
-    variacaoSelecionada: "C8K90PFD",
-    variacoes: [
-      { nome:"P", id:"C8K90PFD"},
-      { nome:"M", id:"T67HKPCX"},
-    ]
+    variacaoSelecionada: "",
+    variacoes: []
   }
+
+  getVariacoes(props){
+    const { produto, usuario, getVariacoes } = this.props;
+    if(!usuario || !produto) return null;
+    getVariacoes(produto._id, usuario.loja);
+  }
+
+  componentWillMount(){
+    this.getVariacoes(this.props);
+  }
+
+  componentWillUpdate(nextProps){
+    if(
+      (!this.props.usuario || !this.props.produto) &&
+      nextProps.usuario && nextProps.produto
+    ) this.getVariacoes(nextProps)
+  }
+
+  getVariacao(id){
+    const { produto, usuario, getVariacao, limparVariacao } = this.props;
+    if( produto && usuario && id !== 'novo') getVariacao(id, produto._id, usuario.loja);
+    else limparVariacao();
+    this.setState({ variacaoSelecionada: id !== 'novo' ? id : ""});
+  }
+
   render() {
-    const { variacoes, variacaoSelecionada } = this.state;
+    const { variacaoSelecionada } = this.state;
+    const { variacoes } = this.props;
     return (
       <div className="Variacoes flex vertical flex-center">
         <Titulo tipo="h2" titulo="Variações" />
         {
-          variacoes.map((item, idx) => (
+          (variacoes || []).map((item, idx) => (
             <div
-              onClick={() => this.setState({ variacaoSelecionada: item.id })}
+              onClick={() => this.getVariacao(item._id)}
               key={idx} 
-              className={`variacao-item ${ variacaoSelecionada === item.id ? "variacao-item-ativa" : ""}`}
+              className={`flex flex-center variacao-item ${ variacaoSelecionada === item._id ? "variacao-item-ativa" : ""}`}
             >
               <span>{item.nome}</span>
             </div>
           ))
         }
+        <div
+          onClick={() => this.getVariacao('novo')}
+          className={`flex flex-center variacao-item ${ !variacaoSelecionada ? "variacao-item-ativa" : ""}`}
+        >
+          <span>+ Novo</span>
+
+        </div>
       </div>
     )
   }
 } 
 
-export default Variacoes;
+const mapStateToProps = state => ({
+  variacoes: state.variacao.variacoes,
+  variacao: state.variacao.variacao,
+  produto: state.produto.produto,
+  usuario: state.auth.usuario
+})
+
+export default connect(mapStateToProps, actions)(Variacoes);
