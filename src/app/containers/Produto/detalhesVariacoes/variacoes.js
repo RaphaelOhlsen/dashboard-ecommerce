@@ -4,7 +4,7 @@ import './styles.css';
 
 import Titulo from '../../../components/Texto/Titulo';
 import { connect } from 'react-redux';
-import * as actions from '../../../actions/variacao'
+import * as actions from '../../../actions/variacoes'
 
 class Variacoes extends Component {
   state = {
