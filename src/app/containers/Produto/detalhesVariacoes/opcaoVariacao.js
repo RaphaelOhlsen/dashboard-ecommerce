@@ -51,7 +51,7 @@ class OpcaoVariacao extends Component {
   onChangeInput = (field, value) => this.setState({[field]: value}, () => this.validate());
 
   validade(){
-    const { codigo, nome, preco, quantidade, peso, largura, altura, comprimento  } = this.state;
+    const { codigo, nome, preco, quantidade, peso, largura, altura, comprimento, freteGratis  } = this.state;
     const erros = {};
 
     if(!codigo) erros.codigo = "Preencha aqui com o código da variação";
@@ -62,6 +62,7 @@ class OpcaoVariacao extends Component {
     if(!largura) erros.largura = "Preencha aqui com a largura da variação";
     if(!altura) erros.altura = "Preencha aqui com a altura da variação";
     if(!comprimento) erros.comprimento = "Preencha aqui com o comprimento da variação"
+    if(!freteGratis) erros.freteGratis = "Selecione uma opção"
 
     this.setState({ erros });
     return !(Object.keys(erros).length > 0 );
@@ -133,7 +134,7 @@ class OpcaoVariacao extends Component {
             <InputValor
               value={ codigo } noStyle
               name="codigo" erro={erros.codigo}
-              handleSubmit={(valor) => this.setState({ codigo: valor })}
+              handleSubmit={(valor) => this.onChangeInput("codigo", valor)}
             />
           )}
         />
@@ -143,7 +144,7 @@ class OpcaoVariacao extends Component {
             <InputValor
               value={ nome } noStyle
               name="nome" erro={erros.nome}
-              handleSubmit={(valor) => this.setState({ nome: valor })}
+              handleSubmit={(valor) => this.onChangeInput( "nome", valor )}
             />
           )}
         />
@@ -155,7 +156,7 @@ class OpcaoVariacao extends Component {
               value={ preco } noStyle
               name="preco" erro={erros.preco}
               type="number"
-              handleSubmit={(valor) => this.setState({ preco: Number(valor) })}
+              handleSubmit={(valor) => this.onChangeInput( "preco", Number(valor) )}
             />
           )}
         />
@@ -166,7 +167,7 @@ class OpcaoVariacao extends Component {
               value={ promocao } noStyle
               name="promocao"
               type="number"
-              handleSubmit={(valor) => this.setState({ promocao: Number(valor) })}
+              handleSubmit={(valor) => this.onChangeInput( "promocao", Number(valor) )}
             />
           )}
         />
@@ -176,7 +177,7 @@ class OpcaoVariacao extends Component {
             <InputValor
               value={ quantidade } noStyle
               name="quantidade" erro={erros.quantidade}
-              handleSubmit={(valor) => this.setState({ quantidade: valor })}
+              handleSubmit={(valor) => this.onChangeInput( "quantidade", valor )}
             />
           )}
         />
@@ -185,7 +186,7 @@ class OpcaoVariacao extends Component {
   }
 
   renderDadosEnvio() {
-    const { peso, largura, altura, comprimento } = this.state;
+    const { peso, freteGratis, largura, altura, comprimento, erros } = this.state;
     return (
       <div className="Dados-Envio">
         <TextoDados
@@ -193,9 +194,23 @@ class OpcaoVariacao extends Component {
           valor={(
             <InputValor
               value={ peso } noStyle
-              name="peso" 
+              name="peso" erro={erros.peso}
               type="number"
-              handleSubmit={(valor) => this.setState({ peso: Number(valor) })}
+              handleSubmit={(valor) => this.onChangeInput({ peso: Number(valor) })}
+            />
+          )}
+        />
+        <TextoDados
+          chave="Frete Grátis"
+          valor={(
+            <InputSelect
+              name="freteGratis" erro={erros.freteGratis}
+              value={freteGratis}
+              onChangeInput = { ev => this.onChangeInput("freteGratis", ev.target.value)}
+              opcoes={[
+                { label: "Sim", value: "sim"},
+                { label: "Não", value: "nao"}
+              ]}
             />
           )}
         />
@@ -204,9 +219,9 @@ class OpcaoVariacao extends Component {
           valor={(
             <InputValor
               value={ largura } noStyle
-              name="largura"
+              name="largura" erro={erros.largura}
               type="number"
-              handleSubmit={(valor) => this.setState({ largura: Number(valor) })}
+              handleSubmit={(valor) => this.onChangeInput( "largura", Number(valor) )}
             />
           )}
         />
@@ -215,9 +230,9 @@ class OpcaoVariacao extends Component {
           valor={(
             <InputValor
               value={ altura } noStyle
-              name="altura"
+              name="altura" erro={erros.altura}
               type="number"
-              handleSubmit={(valor) => this.setState({ altura: Number(valor) })}
+              handleSubmit={(valor) => this.onChangeInput( "altura", Number(valor) )}
             />
           )}
         />
@@ -226,9 +241,9 @@ class OpcaoVariacao extends Component {
           valor={(
             <InputValor
               value={ comprimento } noStyle
-              name="comprimento"
+              name="comprimento" erro={erros.comprimento}
               type="number"
-              handleSubmit={(valor) => this.setState({ comprimento: Number(valor) })}
+              handleSubmit={(valor) => this.onChangeInput( "comprimento", Number(valor) )}
             />
           )}
         />
@@ -238,17 +253,46 @@ class OpcaoVariacao extends Component {
   }
 
   onRemove = id => {
-    const { imagens } = this.state;
-    this.setState({ imagens: imagens.filter((i, idx) => idx !== id) });
+    const { usuario, produto, variacao } = this.props;
+    if(!usuario || !produto || !variacao) return null;
+
+    const { fotos: _fotos } = this.state;
+    const fotos = _fotos.filter((foto, index) => index !== id);
+
+    this.props.removeVariacaoImagens(fotos, variacao._id, produto._id, usuario.loja, error => {
+      this.setState({
+        aviso: {
+          status: !error,
+          msg: error ? error.message : "Foto da Variação removida com sucesso"
+        }
+      })
+    })
+  }
+
+  handleUploadFoto = ev => {
+    const { usuario, produto, variacao } = this.props;
+    if(!usuario || !produto || !variacao) return null;
+
+    const data = new FormData();
+    data.append("files", ev.target.files[0]);
+
+    this.props.updateVariacaoImagens(data, variacao._id, produto._id, usuario.loja, error => {
+      this.setState({
+        aviso: {
+          status: !error,
+          msg: error ? error.message : "Foto da Variação adicionada com sucesso"
+        }
+      })
+    })
   }
 
   renderImagens(){
-    const { imagens } = this.state;
+    const { fotos } = this.state;
     return (
       <div className="dados-de-imagens">
         <BlocoImagens
-          imagens={imagens}
-          handleSubmit={() => alert("Enviado")}
+          imagens={(fotos || [])}
+          handleSubmit={() => this.handleUploadFoto}
           onRemove={this.onRemove}
         />
       </div>
@@ -259,6 +303,7 @@ class OpcaoVariacao extends Component {
     return (
       <div className="Opcao-variacao">
         { this.renderCabecalho() }
+        <AlertGeral aviso={this.state.aviso}/>
         <br/>
         <div className="flex horizontal">
           <div className="flex-1">
