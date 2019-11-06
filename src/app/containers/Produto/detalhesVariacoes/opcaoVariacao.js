@@ -6,26 +6,95 @@ import{ TextoDados} from '../../../components/Texto/Dados';
 import InputValor from '../../../components/Inputs/InputValor';
 import InputSelect from '../../../components/Inputs/Select';
 import BlocoImagens from '../../../components/Imagens/Bloco';
+import AlertGeral from '../../../components/Alert/Geral';
+
+import { connect } from 'react-redux';
+import * as actions from '../../../actions/variacoes';
 
 class OpcaoVariacao extends Component {
-  state = {
-    nome: "P",
-    disponibilidade: "disponivel",
-    preco: 30,
-    promocao: 25,
-    quantidade: 200,
-    peso: 0.750,
-    largura: 3,
-    altura: 5,
-    comprimento: 17,
-    imagens: [
-      "https://dummyimage.com/100x100/99ff00/000222.jpg",
-      "https://dummyimage.com/100x100/99ff00/000222.jpg",
-      "https://dummyimage.com/100x100/99ff00/000222.jpg",
-      "https://dummyimage.com/100x100/99ff00/000222.jpg",
-      "https://dummyimage.com/100x100/99ff00/000222.jpg",
-      "https://dummyimage.com/100x100/99ff00/000222.jpg"     
-    ]
+  
+  generateStateVariacao = (props) => ({
+    codigo: props.variacao ? props.variacao.codigo : "",
+    nome: props.variacao ? props.variacao.nome : "",
+    preco: props.variacao ? props.variacao.preco : 0,
+    promocao: props.variacao ? props.variacao.promocao : 0,
+    quantidade: props.variacao ? props.variacao.quantidade : 0,
+    peso: props.variacao ? props.variacao.peso : "...",
+    freteGratis: props.variacao ? (props.variacao.freteGratis ? "sim" : "nao") : 0,
+    largura: props.variacao ? props.variacao.largura : 0,
+    altura: props.variacao ? props.variacao.altura : 0,
+    comprimento: props.variacao ? props.variacao.comprimento : 0,
+    fotos: props.variacao ? props.variacao.fotos : []
+  })
+
+  constructor(props){
+    super();
+    this.state = {
+      ...this.generateStateVariacao(props),
+      aviso: null,
+      erros: {}
+    }
+  }
+
+  componentWillUpdate(nextProps){
+    if(
+      (!this.props.variacao && nextProps.variacao) ||
+      ( this.variacao && nextProps.variacao &&
+        this.props.variacao.updateAt !== nextProps.variacao.updateAt )
+    ) this.setState(this.generateStateVariacao(nextProps));
+  }
+
+  componentWillUnmount(){
+    this.props.limparVariacao();
+  }
+
+  onChangeInput = (field, value) => this.setState({[field]: value}, () => this.validate());
+
+  validade(){
+    const { codigo, nome, preco, quantidade, peso, largura, altura, comprimento  } = this.state;
+    const erros = {};
+
+    if(!codigo) erros.codigo = "Preencha aqui com o código da variação";
+    if(!nome) erros.nome = "Preencha aqui com o nome da variação";
+    if(!preco) erros.preco = "Preencha aqui com o preco da variação";
+    if(!peso) erros.peso = "Preencha aqui com o peso da variação";
+    if(!quantidade) erros.quantidade = "Preencha aqui com o quantidade da variação";
+    if(!largura) erros.largura = "Preencha aqui com a largura da variação";
+    if(!altura) erros.altura = "Preencha aqui com a altura da variação";
+    if(!comprimento) erros.comprimento = "Preencha aqui com o comprimento da variação"
+
+    this.setState({ erros });
+    return !(Object.keys(erros).length > 0 );
+  }
+
+  updateVariacao(){
+    const{ usuario, produto, variacao } = this.props;
+    if(!usuario || !produto || !variacao || !this.validate()) return null;
+    this.props.updateVariacao(this.state, variacao._id, produto._id, usuario.loja, error => {
+      this.setState({
+        aviso: {
+          status: !error,
+          msg: error ? error.message : "Variação atualizada com sucesso"
+        }
+      });
+      this.props.getVariacoes(produto._id, usuario.loja);
+    })
+  }
+
+  removeVariacao(){
+    const{ usuario, produto, variacao } = this.props;
+    if(!usuario || !produto || !variacao) return null;
+    if(window.confirm("Deseja realmente deletar essa variacao?")){
+      this.props.removeVariacao(variacao._id, produto._id, usuario.loja, error => {
+        this.setState({
+          aviso: {
+            status: !error,
+            msg: error ? error.message : "Variação removida com sucesso"
+          }
+        });
+        this.props.getVariacoes(produto._id, usuario.loja);
+      })
+    }
   }
 
   renderCabecalho() {
@@ -37,11 +106,17 @@ class OpcaoVariacao extends Component {
           />
         </div>
         <div className="">
-          <Button 
+        <Button 
             type="success"
-            onClick={() => alert("Salvo")}
+            onClick={() => this.updateVariacao()}
             label="Salvar"
+          /> 
+        <Button 
+            type="danger"
+            onClick={() => this.removeVariacao()}
+            label="Remover"
           />
+        
         </div>
       </div>
     )
@@ -49,39 +124,36 @@ class OpcaoVariacao extends Component {
 
 
   renderDadosCadastrais() {
-    const { nome, disponibilidade, preco, promocao, quantidade } = this.state;
+    const { nome, codigo, preco, promocao, quantidade, erros } = this.state;
     return (
       <div className="Dados-Produto">
+         <TextoDados
+          chave="Código"
+          valor={(
+            <InputValor
+              value={ codigo } noStyle
+              name="codigo" erro={erros.codigo}
+              handleSubmit={(valor) => this.setState({ codigo: valor })}
+            />
+          )}
+        />
         <TextoDados
           chave="Nome"
           valor={(
             <InputValor
               value={ nome } noStyle
-              name="nome"
+              name="nome" erro={erros.nome}
               handleSubmit={(valor) => this.setState({ nome: valor })}
             />
           )}
         />
-        <TextoDados
-          chave="Disponibilidade"
-          valor={(
-            <InputSelect
-              name="disponibildiade"
-              onChange={(ev)=>this.setState({ disponibilidade: ev.target.value})}
-              value={disponibilidade}
-              opcoes={[
-                {label:"Disponível", value: "disponível"},
-                {label:"Indisponível", value: "indisponível"}
-              ]}
-            />
-          )}
-        />
+        
         <TextoDados
           chave="Preco Padrão"
           valor={(
             <InputValor
               value={ preco } noStyle
-              name="preco"
+              name="preco" erro={erros.preco}
               type="number"
               handleSubmit={(valor) => this.setState({ preco: Number(valor) })}
             />
@@ -103,7 +175,7 @@ class OpcaoVariacao extends Component {
           valor={(
             <InputValor
               value={ quantidade } noStyle
-              name="quantidade"
+              name="quantidade" erro={erros.quantidade}
               handleSubmit={(valor) => this.setState({ quantidade: valor })}
             />
           )}
@@ -121,7 +193,7 @@ class OpcaoVariacao extends Component {
           valor={(
             <InputValor
               value={ peso } noStyle
-              name="peso"
+              name="peso" 
               type="number"
               handleSubmit={(valor) => this.setState({ peso: Number(valor) })}
             />
@@ -204,4 +276,11 @@ class OpcaoVariacao extends Component {
   }
 }
 
-export default OpcaoVariacao;
+const mapStateToProps = state => ({
+  variacao: state.variacao.variacao,
+  produto: state.produto.produto,
+  usuario: state.auth.usuario
+});
+
+
+export default connect(mapStateToProps, actions)( OpcaoVariacao);
