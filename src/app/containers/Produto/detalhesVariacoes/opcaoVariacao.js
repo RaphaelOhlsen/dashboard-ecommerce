@@ -13,19 +13,22 @@ import * as actions from '../../../actions/variacoes';
 
 class OpcaoVariacao extends Component {
   
-  generateStateVariacao = (props) => ({
+  generateStateVariacao = (props) => {
+    console.log(props)
+    return ({
     codigo: props.variacao ? props.variacao.codigo : "",
     nome: props.variacao ? props.variacao.nome : "",
     preco: props.variacao ? props.variacao.preco : 0,
     promocao: props.variacao ? props.variacao.promocao : 0,
     quantidade: props.variacao ? props.variacao.quantidade : 0,
-    peso: props.variacao ? props.variacao.peso : "...",
-    freteGratis: props.variacao ? (props.variacao.freteGratis ? "sim" : "nao") : 0,
-    largura: props.variacao ? props.variacao.largura : 0,
-    altura: props.variacao ? props.variacao.altura : 0,
-    comprimento: props.variacao ? props.variacao.comprimento : 0,
+    peso: props.variacao ? props.variacao.entrega.pesoKg : "...",
+    freteGratis: props.variacao ? (props.variacao.entrega.freteGratis ? "sim" : "nao") : "",
+    largura: props.variacao ? props.variacao.entrega.dimensoes.larguraCm : 0,
+    altura: props.variacao ? props.variacao.entrega.dimensoes.alturaCm : 0,
+    comprimento: props.variacao ? props.variacao.entrega.dimensoes.profundidadeCm : 0,
     fotos: props.variacao ? props.variacao.fotos : []
-  })
+    })
+  };
 
   constructor(props){
     super();
@@ -39,9 +42,10 @@ class OpcaoVariacao extends Component {
   componentWillUpdate(nextProps){
     if(
       (!this.props.variacao && nextProps.variacao) ||
-      ( this.variacao && nextProps.variacao &&
-        this.props.variacao.updateAt !== nextProps.variacao.updateAt )
-    ) this.setState(this.generateStateVariacao(nextProps));
+      ( this.props.variacao && nextProps.variacao &&
+        this.props.variacao.updatedAt !== nextProps.variacao.updatedAt )
+    ) 
+    this.setState(this.generateStateVariacao(nextProps));
   }
 
   componentWillUnmount(){
@@ -50,7 +54,7 @@ class OpcaoVariacao extends Component {
 
   onChangeInput = (field, value) => this.setState({[field]: value}, () => this.validate());
 
-  validade(){
+  validate(){
     const { codigo, nome, preco, quantidade, peso, largura, altura, comprimento, freteGratis  } = this.state;
     const erros = {};
 
@@ -196,7 +200,7 @@ class OpcaoVariacao extends Component {
               value={ peso } noStyle
               name="peso" erro={erros.peso}
               type="number"
-              handleSubmit={(valor) => this.onChangeInput({ peso: Number(valor) })}
+              handleSubmit={(valor) => this.onChangeInput( "peso", Number(valor) )}
             />
           )}
         />
@@ -206,7 +210,7 @@ class OpcaoVariacao extends Component {
             <InputSelect
               name="freteGratis" erro={erros.freteGratis}
               value={freteGratis}
-              onChangeInput = { ev => this.onChangeInput("freteGratis", ev.target.value)}
+              onChange = { ev => this.onChangeInput("freteGratis", ev.target.value)}
               opcoes={[
                 { label: "Sim", value: "sim"},
                 { label: "Não", value: "nao"}
@@ -259,14 +263,16 @@ class OpcaoVariacao extends Component {
     const { fotos: _fotos } = this.state;
     const fotos = _fotos.filter((foto, index) => index !== id);
 
-    this.props.removeVariacaoImagens(fotos, variacao._id, produto._id, usuario.loja, error => {
-      this.setState({
-        aviso: {
-          status: !error,
-          msg: error ? error.message : "Foto da Variação removida com sucesso"
-        }
-      })
-    })
+    if(window.confirm("Voce deseja realmente remover esta imagem")) {
+      this.props.removeVariacaoImagens(fotos, variacao._id, produto._id, usuario.loja, error => {
+        this.setState({
+          aviso: {
+            status: !error,
+            msg: error ? error.message : "Foto da Variação removida com sucesso"
+          }
+        })
+      });
+    }
   }
 
   handleUploadFoto = ev => {
@@ -292,7 +298,7 @@ class OpcaoVariacao extends Component {
       <div className="dados-de-imagens">
         <BlocoImagens
           imagens={(fotos || [])}
-          handleSubmit={() => this.handleUploadFoto}
+          handleSubmit={this.handleUploadFoto}
           onRemove={this.onRemove}
         />
       </div>

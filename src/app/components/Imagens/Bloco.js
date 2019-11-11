@@ -9,7 +9,6 @@ class BlocoImagem extends Component {
   
   render() {
     const { imagens, handleSubmit, onRemove } = this.props;
-    console.log(imagens)
     return (
       <div className="Bloco-Imagem">
         <div className="flex horizontal">

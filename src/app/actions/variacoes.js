@@ -104,7 +104,7 @@ export const removeVariacaoImagens = (fotos, id, produto, loja, cb) => {
 
 export const updateVariacaoImagens = (data, id, produto, loja, cb) => {
   return function(dispatch){
-    axios.put(`${api}/${versao}/api/variacoes/iamages/${id}?loja=${loja}&produto=${produto}`, data, getHeaders())
+    axios.put(`${api}/${versao}/api/variacoes/images/${id}?loja=${loja}&produto=${produto}`, data, getHeaders())
     .then(response => {
       dispatch({ type: GET_VARIACAO, payload: response.data });
       cb(null)

@@ -22,9 +22,9 @@ class DetalhesProduto extends Component {
     nome: props.produto ? props.produto.titulo : "",
     disponibildiade: props.produto ? (props.produto.disponilidade ? "disponivel" : "indisponivel") : "",
     descricao: props.produto ? props.produto.descricao : "",
-    categoria: props.produto ? props.produto.categoria._id : "",
+    categoria: props.produto ? (props.produto.categoria._id || props.produto.categoria) : "",
     fotos: props.produto ? props.produto.fotos : "",
-    preco: props.produto ? props.produto.preco.toString() : "",
+    preco: props.produto ? props.produto.preco : "",
     promocao: props.produto ? props.produto.promocao : "",
     sku: props.produto ? props.produto.sku : ""
   });
@@ -54,7 +54,6 @@ class DetalhesProduto extends Component {
     if(!descricao) erros.descricao = "Preencha aqui com a descricao do produto";
     if(!categoria) erros.categoria = "Preencha aqui com a categoria do produto";
     if(!preco) erros.preco = "Preencha aqui com o preço do produto";
-    if(!nome) erros.nome = "Preencha aqui com o nome do produto";
     if(!sku) erros.sku = "Preencha aqui com a SKU do produto";
 
     this.setState({erros});
@@ -100,7 +99,6 @@ class DetalhesProduto extends Component {
   renderDados() {
     const { nome, disponibilidade, descricao, categoria, preco, promocao, sku, erros  } = this.state;
     const { categorias } = this.props;
-    console.log('Preco:', typeof(preco));
     return (
       <div className="Dados-Produto">
         <TextoDados
@@ -189,10 +187,12 @@ class DetalhesProduto extends Component {
     const { fotos: _fotos } = this.state;
     const fotos = _fotos.filter((foto, index) => index !== id);
     if(window.confirm("Voce deseja realemente remover esta imagem?")){
-      this.props.removeProdutoImagens(fotos, produto._id, usuario.loja, error => {
+      this.props.removeProdutoImagens(fotos, produto._id, usuario.loja, (error) => {
         this.setState({
-          status: !error,
-          msg: error ? error.message : "Foto do produto removida com sucesso"
+          aviso: {
+            status: !error,
+            msg: error ? error.message : "Foto do produto removida com sucesso"
+          }
         })
       })
     }
@@ -205,10 +205,12 @@ class DetalhesProduto extends Component {
     const data = new FormData();
     data.append("files", ev.target.files[0]);
 
-    this.props.updateProdutoImagens(data, produto._id, usuario.loja, error => {
+    this.props.updateProdutoImagens(data, produto._id, usuario.loja, (error) => {
       this.setState({
-        status: !error,
-        msg: error ? error.message : "Fotos do produto atualizadas com sucesso"
+        aviso: {
+          status: !error,
+          msg: error ? error.message : "Fotos do produto atualizadas com sucesso"
+        }
       })
     })
   }

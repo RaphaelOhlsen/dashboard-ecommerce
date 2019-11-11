@@ -13,7 +13,7 @@ class Variacoes extends Component {
   }
 
   getVariacoes(props){
-    const { produto, usuario, getVariacoes } = this.props;
+    const { produto, usuario, getVariacoes } = props;
     if(!usuario || !produto) return null;
     getVariacoes(produto._id, usuario.loja);
   }
@@ -31,8 +31,8 @@ class Variacoes extends Component {
 
   getVariacao(id){
     const { produto, usuario, getVariacao, limparVariacao } = this.props;
+    limparVariacao();
     if( produto && usuario && id !== 'novo') getVariacao(id, produto._id, usuario.loja);
-    else limparVariacao();
     this.setState({ variacaoSelecionada: id !== 'novo' ? id : ""});
   }
 
